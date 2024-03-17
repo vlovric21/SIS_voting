@@ -1,3 +1,43 @@
+| Prijava (Autentifikacija i autorizacija) | F01 |
+| - | - |
+| Opis | username/password (mail)<br> 2FA<br> OpenID<br> OAuth 2.0<br> JWT<br> Recaptcha? |
+
+| Enkripcija glasova | F02 |
+| - | - |
+| Opis | Kriptiranje glasova prije spremanja u bazu<br> AES ili SHA<br> OpenSSL?<br> Poanta je zadržat “povjerljivost” glasova |
+
+| Verifikacija glasova | F03 |
+| - | - |
+| Opis | Spriječit manipuliranje podataka u prijenosu<br> Digital signatures i/ili hash funkcije<br> GnuPG / HashCalc |
+
+| Audit trail (trag revizije) | F04 |
+| - | - |
+| Opis | Logganje svih glasovanja<br> ID glasaca, vrijeme glasanja i “vote details”<br> Log4j / ELK Stack? |
+
+| Testiranje | F05 |
+| - | - |
+| Opis | Penetration testing, vulnerability scanning, code review<br> OWASP ZAP / Nessus / SonarQube |
+
+| Prikazat pollove | F06 |
+| - | - |
+| Opis | Kad korisnik doda svoj poll on se prikazuje ostalim korisnicima |
+
+| Dodavanje novog polla | F07 |
+| - | - |
+| Opis | Korisnik dodaje novi poll, daje mu ime, opis i opcije |
+
+| Odjava | F09 |
+| - | - |
+| Opis | Korisnik se može odjaviti |
+
+| Detalji votea? | F0X |
+| - | - |
+| Opis | ? |
+
+| Deployment? | F0X |
+| - | - |
+| Opis | AWS / Google Cloud Platform<br> Za testiranje skalabilnosti |
+
 Develop a secure online voting system that ensures confidentiality, integrity, and availability of votes while protecting against hacking, fraud, and manipulation.
 A practical component for developing a secure online voting system can be achieved by creating a prototype system that implements various security measures to ensure the confidentiality, integrity, and availability of votes. Here are the specific details on how this can be achieved:
 
