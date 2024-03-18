@@ -26,15 +26,15 @@
 | - | - |
 | Opis | Korisnik dodaje novi poll, daje mu ime, opis i opcije |
 
+| Detalji votea? | F08 |
+| - | - |
+| Opis | Prikazivanje broja glasova na pollu i postotci izbora nakon glasanja |
+
 | Odjava | F09 |
 | - | - |
 | Opis | Korisnik se može odjaviti |
 
-| Detalji votea? | F0X |
-| - | - |
-| Opis | ? |
-
-| Deployment? | F0X |
+| Deployment? | F10 |
 | - | - |
 | Opis | AWS / Google Cloud Platform<br> Za testiranje skalabilnosti |
 
