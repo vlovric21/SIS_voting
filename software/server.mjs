@@ -1,7 +1,14 @@
 import express from "express";
 import RestTest from "./servis/restTest.js";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
 
 const port = 5000;
+
+const currentModuleURL = import.meta.url;
+const currentModulePath = fileURLToPath(currentModuleURL);
+const putanja = dirname(currentModulePath);
 
 const server = express();
 server.use(express.urlencoded({extended: true}));
@@ -23,5 +30,7 @@ function restService() {
 }
 
 function app() {
-    server.use("/pocetna", express.static("./aplikacija/pocetna.html"));
+    let htmlUpravitelj = new HtmlUpravitelj(putanja + "/aplikacija");
+
+    server.get("/pocetna", htmlUpravitelj.pocetnaStranica.bind(htmlUpravitelj));
 }
