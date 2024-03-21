@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.mjs",
   "scripts": {
-    "pripremi": "npm link --save express",
+    "pripremi": "npm link --save express sqlite3",
     "start": "node server.mjs"
   },
   "author": "",
