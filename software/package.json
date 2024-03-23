@@ -1,0 +1,15 @@
+{
+  "name": "software",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.mjs",
+  "scripts": {
+    "pripremi": "npm link --save express sqlite3",
+    "start": "node server.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "file:../../../../../../usr/lib/node_modules/express"
+  }
+}
