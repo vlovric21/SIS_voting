@@ -35,8 +35,9 @@ function restService() {
     server.get("/api/restTest", restTest.testApi);
 
     let restKorisnik = new RestKorisnik(sol);
+    server.get("/api/korisnici/aktiviraj/:korime", restKorisnik.aktivirajKorisnika.bind(restKorisnik));
     server.post("/api/korisnici", restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
-
+    
     let restPitanja = new RestPitanja(brojPoStr);
     server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));
     server.post("/api/pitanja", restPitanja.postPitanja.bind(restPitanja));

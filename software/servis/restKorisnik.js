@@ -23,11 +23,30 @@ class RestKorisnik {
             await mail.posaljiMail(adresa.trim(), "Potvrdite mail adresu", poruka);
 
             res.status(201);
-            res.type("application/json");
             res.send(JSON.stringify({"opis": `poveznica za aktivaciju poslana na adresu ${adresa}`}));
         }).catch((greska) => {
             res.status(400);
+            res.send(JSON.stringify({"greska": greska.message}));
+        });
+    }
+
+    aktivirajKorisnika = async function (req, res) {
+        let korime = req.params.korime;
+        let token = req.query.token;
+
+        if (token == undefined || token == "") {
             res.type("application/json");
+            res.status(417);
+            res.send(JSON.stringify({"greska": "nedostaje token"}));
+            return;
+        }
+
+        let korisnikDAO = new KorisnikDAO();
+        korisnikDAO.aktivirajKorisnika(korime, token).then((uspjeh) => {
+            res.status(201);
+            res.send(JSON.stringify({"opis": uspjeh}));
+        }).catch((greska) => {
+            res.status(400);
             res.send(JSON.stringify({"greska": greska.message}));
         });
     }

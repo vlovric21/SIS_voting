@@ -28,6 +28,38 @@ class KorisnikDAO {
 
         return korisnik.mail;
     }
+
+    aktivirajKorisnika = async function(korime, token) {
+        this.baza.spojiSeNaBazu();
+        let sqlKorisnik = "SELECT * FROM Korisnik WHERE korime = ?;";
+        let korisnici = await this.baza.izvrsiUpit(sqlKorisnik, [korime]);
+        if (korisnici.length == 0) {
+            this.baza.zatvoriVezu();
+            throw new Error("korisnik s tim korisnickim imenom ne postoji");
+        }
+        let korisnik = korisnici[0];
+        if (korisnik.aktivan == 1 || korisnik.authToken == null || korisnik.authToken == "") {
+            this.baza.zatvoriVezu();
+            throw new Error("korisnik je vec aktiviran");
+        }
+
+        if (kodovi.kreirajSHA512(token) != korisnik.authToken) {
+            this.baza.zatvoriVezu();
+            throw new Error("neispravan token");
+        }
+
+        try {
+            let sql = 'UPDATE Korisnik SET aktivan = 1, authToken = "" WHERE korime = ?;';
+            await this.baza.izvrsiUpit(sql, [korime]);
+        } catch (error) {
+            this.baza.zatvoriVezu();
+            throw new Error("greska kod aktivacije");
+        }
+
+        this.baza.zatvoriVezu();
+
+        return "uspjesna aktivacija";
+    }
 }
 
 module.exports = KorisnikDAO;
