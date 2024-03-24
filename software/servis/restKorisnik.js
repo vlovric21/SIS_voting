@@ -1,4 +1,5 @@
 const KorisnikDAO = require("./korisnikDAO.js");
+const mail = require("./moduli/mail.js");
 
 class RestKorisnik {
     registrirajNovogKorisnika = async function (req, res) {
