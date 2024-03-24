@@ -7,6 +7,7 @@ import { dirname } from "path";
 import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
 
 const port = 5000;
+const url = `http://localhost:${port}`;
 
 const currentModuleURL = import.meta.url;
 const currentModulePath = fileURLToPath(currentModuleURL);
@@ -34,7 +35,7 @@ function restService() {
     let restTest = new RestTest();
     server.get("/api/restTest", restTest.testApi);
 
-    let restKorisnik = new RestKorisnik(sol, putanja + "/aplikacija");
+    let restKorisnik = new RestKorisnik(sol, putanja + "/aplikacija", url);
     server.get("/api/korisnici/aktiviraj/:korime", restKorisnik.aktivirajKorisnika.bind(restKorisnik));
     server.post("/api/korisnici", restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
     

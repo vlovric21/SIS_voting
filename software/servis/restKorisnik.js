@@ -4,9 +4,10 @@ const kodovi = require("./moduli/kodovi.js");
 const mail = require("./moduli/mail.js");
 
 class RestKorisnik {
-    constructor (sol, putanja) {
+    constructor (sol, putanja, url) {
         this.sol = sol;
         this.putanja = putanja;
+        this.url = url;
     }
 
     registrirajNovogKorisnika = async function (req, res) {
@@ -25,7 +26,7 @@ class RestKorisnik {
 
         let korisnikDAO = new KorisnikDAO();
         korisnikDAO.registrirajNovogKorisnika(noviKorisnik, authToken).then(async (adresa) => {
-            let poruka = `<b>Poštovani korisniče ${noviKorisnik.korime}</b>,<br><br>potvrdite mail adresu na sljedećoj poveznici: <a href="http://localhost:5000/api/korisnici/aktiviraj/${noviKorisnik.korime}?token=${authToken}">Potvrdi mail adresu</a>`;
+            let poruka = `<b>Poštovani korisniče ${noviKorisnik.korime}</b>,<br><br>potvrdite mail adresu na sljedećoj poveznici: <a href="${this.url}/api/korisnici/aktiviraj/${noviKorisnik.korime}?token=${authToken}">Potvrdi mail adresu</a>`;
             await mail.posaljiMail(adresa.trim(), "Potvrdite mail adresu", poruka);
 
             res.status(201);
@@ -47,7 +48,7 @@ class RestKorisnik {
             return;
         }
 
-        let korisnikDAO = new KorisnikDAO();
+        let korisnikDAO = new KorisnikDAO(this.sol);
         let htmlUpravitelj = new HtmlUpravitelj(this.putanja);
         korisnikDAO.aktivirajKorisnika(korime, token).then(async (uspjeh) => {
             res.status(200);
