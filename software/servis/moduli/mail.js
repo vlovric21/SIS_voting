@@ -1,17 +1,25 @@
 const nodemailer = require('nodemailer');
+const ds = require("fs");
+
+let konfDat = ds.readFileSync(__dirname + "/mailKonf.csv", "utf-8");
+var konfZapisi = {};
+for (let zapis of konfDat.split("\n")) {
+    let podijeljen = zapis.split(":");
+    konfZapisi[podijeljen[0]] = podijeljen[1];
+}
 
 let mailer = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
+    host: konfZapisi.mailHost,
+    port: parseInt(konfZapisi.mailPort),
     auth: {
-        user: " --- VASA --- FOI --- ADRESA --- @student.foi.hr",
-        pass: " --- GOOGLE APP PASSWORD: info na https://elf.foi.hr/mod/page/view.php?id=118602 --- ",
+        user: konfZapisi.mailUser,
+        pass: konfZapisi.mailPass,
     },
 });
 
-exports.posaljiMail = async function(salje, prima, predmet, poruka) {
+exports.posaljiMail = async function(prima, predmet, poruka) {
 	message = {
-		from: salje,
+		from: konfZapisi.mailUser,
 		to: prima,
 		subject: predmet,
 		html: poruka
