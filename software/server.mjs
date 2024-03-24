@@ -1,6 +1,7 @@
 import express from "express";
 import RestTest from "./servis/restTest.js";
 import RestPitanja from "./servis/restPitanja.js";
+import RestKorisnik from "./servis/restKorisnik.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
@@ -31,6 +32,9 @@ server.listen(port, () => {
 function restService() {
     let restTest = new RestTest();
     server.get("/api/restTest", restTest.testApi);
+
+    let restKorisnik = new RestKorisnik();
+    server.post("/api/korisnici", restKorisnik.registrirajNovogKorisnika);
 
     let restPitanja = new RestPitanja(brojPoStr);
     server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));

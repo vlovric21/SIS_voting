@@ -50,7 +50,7 @@ class RestPitanja {
 
 function provjeriTijeloPitanja(pitanje = null) {
     if (pitanje == null || pitanje == undefined) {
-        return "pitanje ne postoji";
+        return "pitanje nije poslano";
     }
 
     let greske = "";
