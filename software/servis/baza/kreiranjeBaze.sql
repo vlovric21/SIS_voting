@@ -48,3 +48,6 @@ CREATE TABLE "Dnevnik"(
   "vrijeme" DATETIME
 );
 COMMIT;
+
+ALTER TABLE Korisnik
+ADD COLUMN authToken TEXT;
