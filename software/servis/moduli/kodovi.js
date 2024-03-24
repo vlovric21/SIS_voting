@@ -16,8 +16,16 @@ exports.kreirajSHA512 = function(tekst, sol) {
 	return izlaz;
 }
 
-exports.dajNasumceBroj = function(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); 
+exports.generirajAutentifikacijskiToken = function() {
+	return crypto.randomBytes(128).toString('hex');
 }
+
+exports.dajNasumicniBroj = function(min, max) {
+  return _dajNasumicniBroj(min, max);
+}
+
+_dajNasumicniBroj = function(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min) + min); 
+  }

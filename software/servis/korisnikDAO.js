@@ -7,7 +7,7 @@ class KorisnikDAO {
         this.baza = new Baza("baza.sqlite");
     }
 
-    registrirajNovogKorisnika = async function(korisnik) {
+    registrirajNovogKorisnika = async function(korisnik, authToken) {
         this.baza.spojiSeNaBazu();
         let sqlKorime = "SELECT * FROM Korisnik WHERE korime = ?;";
         if ((await this.baza.izvrsiUpit(sqlKorime, [korisnik.korime])).length > 0) {
@@ -21,8 +21,8 @@ class KorisnikDAO {
             throw new Error("korisnik s tim mailom vec postoji");
         }
 
-        let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan) VALUES (?, ?, ?, 0);";
-        await this.baza.izvrsiUpit(sql, [korisnik.korime, kodovi.kreirajSHA512(korisnik.lozinka, this.sol), korisnik.mail]);
+        let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan, authToken) VALUES (?, ?, ?, 0, ?);";
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, kodovi.kreirajSHA512(korisnik.lozinka, this.sol), korisnik.mail, kodovi.kreirajSHA512(authToken)]);
 
         this.baza.zatvoriVezu();
 

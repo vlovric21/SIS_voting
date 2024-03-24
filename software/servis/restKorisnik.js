@@ -1,4 +1,5 @@
 const KorisnikDAO = require("./korisnikDAO.js");
+const kodovi = require("./moduli/kodovi.js");
 const mail = require("./moduli/mail.js");
 
 class RestKorisnik {
@@ -14,11 +15,16 @@ class RestKorisnik {
             return;
         }
 
+        let authToken = kodovi.generirajAutentifikacijskiToken();
+
         let korisnikDAO = new KorisnikDAO();
-        korisnikDAO.registrirajNovogKorisnika(noviKorisnik).then((mail) => {
+        korisnikDAO.registrirajNovogKorisnika(noviKorisnik, authToken).then(async (adresa) => {
+            let poruka = `<b>Poštovani korisniče ${noviKorisnik.korime}</b>,<br><br>potvrdite mail adresu na sljedećoj poveznici: <a href="http://localhost:5000/api/korisnici/aktiviraj/${noviKorisnik.korime}?token=${authToken}">Potvrdi mail adresu</a>`;
+            await mail.posaljiMail("dmatijani21@student.foi.hr", adresa.trim(), "Potvrdite mail adresu", poruka);
+
             res.status(201);
             res.type("application/json");
-            res.send(JSON.stringify({"opis": `poveznica za aktivaciju poslana na adresu ${mail}`}));
+            res.send(JSON.stringify({"opis": `poveznica za aktivaciju poslana na adresu ${adresa}`}));
         }).catch((greska) => {
             res.status(400);
             res.type("application/json");

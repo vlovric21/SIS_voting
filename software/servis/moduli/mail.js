@@ -14,7 +14,7 @@ exports.posaljiMail = async function(salje, prima, predmet, poruka) {
 		from: salje,
 		to: prima,
 		subject: predmet,
-		text: poruka
+		html: poruka
 	}
 	
 	let odgovor = await mailer.sendMail(message);
