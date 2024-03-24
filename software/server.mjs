@@ -13,6 +13,7 @@ const currentModulePath = fileURLToPath(currentModuleURL);
 const putanja = dirname(currentModulePath);
 
 const brojPoStr = 10;
+const sol = "daskfSDFTRE54w5WefDSFDSF";
 
 const server = express();
 server.use(express.urlencoded({extended: true}));
@@ -33,8 +34,8 @@ function restService() {
     let restTest = new RestTest();
     server.get("/api/restTest", restTest.testApi);
 
-    let restKorisnik = new RestKorisnik();
-    server.post("/api/korisnici", restKorisnik.registrirajNovogKorisnika);
+    let restKorisnik = new RestKorisnik(sol);
+    server.post("/api/korisnici", restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
 
     let restPitanja = new RestPitanja(brojPoStr);
     server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));

@@ -1,7 +1,9 @@
 const Baza = require("./baza/baza.js");
+const kodovi = require("./moduli/kodovi.js");
 
 class KorisnikDAO {
-    constructor() {
+    constructor(sol) {
+        this.sol = sol;
         this.baza = new Baza("baza.sqlite");
     }
 
@@ -20,7 +22,7 @@ class KorisnikDAO {
         }
 
         let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan) VALUES (?, ?, ?, 0);";
-        await this.baza.izvrsiUpit(sql, [korisnik.korime, korisnik.lozinka, korisnik.mail]);
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, kodovi.kreirajSHA512(korisnik.lozinka, this.sol), korisnik.mail]);
 
         this.baza.zatvoriVezu();
 
