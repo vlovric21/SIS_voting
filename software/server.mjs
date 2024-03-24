@@ -15,6 +15,7 @@ const brojPoStr = 10;
 
 const server = express();
 server.use(express.urlencoded({extended: true}));
+server.use(express.json());
 
 restService();
 app();
@@ -33,6 +34,7 @@ function restService() {
 
     let restPitanja = new RestPitanja(brojPoStr);
     server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));
+    server.post("/api/pitanja", restPitanja.postPitanja.bind(restPitanja));
 }
 
 function app() {
