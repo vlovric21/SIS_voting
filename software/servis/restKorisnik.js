@@ -1,8 +1,14 @@
 const KorisnikDAO = require("./korisnikDAO.js");
+const HtmlUpravitelj = require("../aplikacija/htmlUpravitelj.js");
 const kodovi = require("./moduli/kodovi.js");
 const mail = require("./moduli/mail.js");
 
 class RestKorisnik {
+    constructor (sol, putanja) {
+        this.sol = sol;
+        this.putanja = putanja;
+    }
+
     registrirajNovogKorisnika = async function (req, res) {
         res.type("application/json");
         
@@ -42,12 +48,17 @@ class RestKorisnik {
         }
 
         let korisnikDAO = new KorisnikDAO();
-        korisnikDAO.aktivirajKorisnika(korime, token).then((uspjeh) => {
-            res.status(201);
-            res.send(JSON.stringify({"opis": uspjeh}));
-        }).catch((greska) => {
-            res.status(400);
-            res.send(JSON.stringify({"greska": greska.message}));
+        let htmlUpravitelj = new HtmlUpravitelj(this.putanja);
+        korisnikDAO.aktivirajKorisnika(korime, token).then(async (uspjeh) => {
+            res.status(200);
+            res.type("text/html");
+            let str = await htmlUpravitelj.uspjesnaAktivacijaStranica();
+            res.send(str);
+        }).catch(async (greska) => {
+            res.status(200);
+            res.type("text/html");
+            let str = await htmlUpravitelj.neuspjesnaAktivacijaStranica(greska.message);
+            res.send(str);
         });
     }
 }

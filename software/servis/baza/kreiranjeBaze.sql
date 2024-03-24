@@ -51,3 +51,24 @@ COMMIT;
 
 ALTER TABLE Korisnik
 ADD COLUMN authToken TEXT;
+
+
+
+
+INSERT INTO Pitanje(pitanje, Korisnik_idKorisnik) VALUES("Kako se osjećate u vezi novog semestra?", 1);
+INSERT INTO Pitanje(pitanje, Korisnik_idKorisnik) VALUES("Što kažete na hranu u menzi?", 1);
+
+INSERT INTO Odabir(tekst, Pitanje_idPitanje) VALUES("A onako...", 1);
+INSERT INTO Odabir(tekst, Pitanje_idPitanje) VALUES("Dosta je lagan.", 1);
+INSERT INTO Odabir(tekst, Pitanje_idPitanje) VALUES("Težak je!", 1);
+
+INSERT INTO Odabir(tekst, Pitanje_idPitanje) VALUES("Najbolji je pohani sir.", 2);
+INSERT INTO Odabir(tekst, Pitanje_idPitanje) VALUES("Nije fino.", 2);
+INSERT INTO Odabir(tekst, Pitanje_idPitanje) VALUES("Kako kad.", 2);
+
+INSERT INTO Korisnik(korime, lozinka, mail, aktivan) VALUES ("test", "123456", "test@mail.hr", true);
+
+DELETE FROM Pitanje WHERE pitanje = "Rade li REST servisi?";
+
+DELETE FROM Korisnik WHERE korime = "dmatijani21";
+UPDATE Korisnik SET aktivan = 1 WHERE korime = "test";
