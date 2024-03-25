@@ -29,8 +29,10 @@ class RestKorisnik {
 
         let korisnikDAO = new KorisnikDAO();
         korisnikDAO.registrirajNovogKorisnika(noviKorisnik, authToken).then(async (adresa) => {
-            let poruka = `<b>Poštovani korisniče ${noviKorisnik.korime}</b>,<br><br>potvrdite mail adresu na sljedećoj poveznici: <a href="${this.url}/api/korisnici/aktiviraj/${noviKorisnik.korime}?token=${authToken}">Potvrdi mail adresu</a>`;
+            let url = `${this.url}/api/korisnici/aktiviraj/${noviKorisnik.korime}?token=${authToken}`;
+            let poruka = `<b>Poštovani korisniče ${noviKorisnik.korime}</b>,<br><br>potvrdite mail adresu na sljedećoj poveznici: <a href="${url}">Potvrdi mail adresu</a>`;
             await mail.posaljiMail(adresa.trim(), "Potvrdite mail adresu", poruka);
+            console.log(url);
 
             res.status(201);
             res.send(JSON.stringify({"opis": `poveznica za aktivaciju poslana na adresu ${adresa}`}));
