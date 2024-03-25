@@ -98,3 +98,81 @@ header {
     color: white;
     font-size: large;
 }
+/***********************FORMA*NOVO*PITANJE***************************/
+.container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.form h2 {
+    margin-bottom: 20px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+textarea, input[type="radio"], input[type="checkbox"], input[type="submit"] {
+    margin-bottom: 10px;
+}
+
+input[type="submit"]{
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 1rem 3rem; 
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+form button{
+    background-color: rgb(221, 221, 221);
+    color: black;
+    margin: 0.5rem;
+    border: none;
+    padding: 0.5rem 1rem; 
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#pitanje-input{
+    line-height: 24px;
+    font-size: 20px;
+    width: 99%;
+    height: 2rem;
+    border: none;
+}
+#pitanje{
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+input:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+
+input[type="submit"]:hover {
+    background-color: #484848; 
+    transform: scale(1.05);
+}
+
+form button:hover{
+    background-color: black;
+    color: white; 
+    transform: scale(1.05);
+}
+
+input[type="submit"]:focus {
+    outline: none; 
+}
