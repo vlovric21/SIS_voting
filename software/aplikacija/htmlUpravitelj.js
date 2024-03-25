@@ -9,6 +9,10 @@ class HtmlUpravitelj {
         res.send(await this.ucitajStranicu("/pocetna.html", req));
     }
 
+    novoPitanje = async (req, res) => {
+        res.send(await this.ucitajStranicu("/novo-pitanje.html", req));
+    }
+
     ucitajStranicu = async (stranica) => {
         let stranice = [
             ds.readFile(this.putanja + stranica, "UTF-8"),

@@ -35,4 +35,5 @@ function app() {
     let htmlUpravitelj = new HtmlUpravitelj(putanja + "/aplikacija");
 
     server.get("/pocetna", htmlUpravitelj.pocetnaStranica.bind(htmlUpravitelj));
+    server.get("/novo-pitanje", htmlUpravitelj.novoPitanje.bind(htmlUpravitelj));
 }
