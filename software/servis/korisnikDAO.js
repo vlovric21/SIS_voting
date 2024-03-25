@@ -61,6 +61,26 @@ class KorisnikDAO {
         return "uspjesna aktivacija";
     }
 
+    provjeriPostojanjeKorisnika = async function(korime) {
+        this.baza.spojiSeNaBazu();
+        let sql = "SELECT * FROM Korisnik WHERE korime = ?;";
+        let dobiveniKorisnici = await this.baza.izvrsiUpit(sql, [korime]);
+        if (dobiveniKorisnici.length == 0) {
+            this.baza.zatvoriVezu();
+            throw new Error("korisnik ne postoji");
+        }
+        let dobivenKorisnik = dobiveniKorisnici[0];
+
+        if (dobivenKorisnik.aktivan == 0 || dobivenKorisnik.authToken != "") {
+            this.baza.zatvoriVezu();
+            throw new Error("korisnik nije aktiviran");
+        }
+
+        this.baza.zatvoriVezu();
+
+        return dobivenKorisnik;
+    }
+
     provjeriKorisnickePodatke = async function(korisnik) {
         this.baza.spojiSeNaBazu();
         let sql = "SELECT * FROM Korisnik WHERE korime = ?;";

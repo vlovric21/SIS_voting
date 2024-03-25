@@ -2,12 +2,15 @@ const KorisnikDAO = require("./korisnikDAO.js");
 const HtmlUpravitelj = require("../aplikacija/htmlUpravitelj.js");
 const kodovi = require("./moduli/kodovi.js");
 const mail = require("./moduli/mail.js");
+const jwt = require("./moduli/jwt.js");
 
 class RestKorisnik {
-    constructor (sol, putanja, url) {
+    constructor (sol, putanja, url, jwtTajniKljuc, jwtValjanost) {
         this.sol = sol;
         this.putanja = putanja;
         this.url = url;
+        this.jwtTajniKljuc = jwtTajniKljuc;
+        this.jwtValjanost = jwtValjanost;
     }
 
     registrirajNovogKorisnika = async function (req, res) {
@@ -65,8 +68,25 @@ class RestKorisnik {
 
     dobijJWT = async function (req, res) {
         res.type("application/json");
-        res.status(201);
-        res.send(JSON.stringify({"opis": "radi"}));
+        
+        let korime = req.params.korime;
+        let korisnikDAO = new KorisnikDAO(this.sol);
+        korisnikDAO.provjeriPostojanjeKorisnika(korime).then((korisnik) => {
+            if (req.session.korime === null || req.session.korime === undefined) {
+                res.status(401);
+                res.send(JSON.stringify({"opis": "potrebna prijava"}));
+                return;
+            }
+
+            let token = jwt.kreirajToken({korime: korime}, this.jwtTajniKljuc, this.jwtValjanost);
+            req.session.jwt = token;
+            res.set("Authorization", `Bearer ${token}`);
+            res.status(201);
+            res.send(JSON.stringify({"opis": "uspjesno kreiran jwt"}));
+        }).catch((greska) => {
+            res.status(400);
+            res.send(JSON.stringify({"greska": greska.message}));
+        });
     }
 
     kreirajSesiju = async function (req, res) {
