@@ -73,3 +73,28 @@ header {
     margin: 6rem auto;
     text-align: center;
 }
+
+.new-poll-button{
+    background-color: black;
+    display: flex;
+    position: fixed;
+    bottom: 10rem;
+    right: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    align-items: center;
+    border-radius: 5px;
+    z-index: 11;
+}
+
+.new-poll-button i{
+    color: white;
+    font-size: 40px;
+    margin-left: 0.6rem;
+}
+
+.new-poll-button a{
+    text-decoration: none;
+    color: white;
+    font-size: large;
+}
