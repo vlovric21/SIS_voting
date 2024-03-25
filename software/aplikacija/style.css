@@ -126,15 +126,17 @@ textarea, input[type="radio"], input[type="checkbox"], input[type="submit"] {
 
 input[type="submit"]{
     background-color: black;
+    font-size: 1rem;
     color: white;
     border: none;
-    padding: 1rem 3rem; 
+    padding: 1rem 2rem; 
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 form button{
     background-color: rgb(221, 221, 221);
+    font-size: 1rem;
     color: black;
     margin: 0.5rem;
     border: none;
@@ -177,15 +179,17 @@ input[type="submit"]:focus {
     outline: none; 
 }
 
-/****************************PRIJAVA**********************************/
-.container-login {
+/****************************PRIJAVA/REGISTRACIJA**********************************/
+.container-login,
+.container-registration {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.login-form {
+.login-form,
+.registration-form {
     background-color: #ffffff;
     padding: 40px;
     border-radius: 8px;
