@@ -62,6 +62,50 @@ class RestKorisnik {
             res.send(str);
         });
     }
+
+    dobijJWT = async function (req, res) {
+        res.type("application/json");
+        res.status(201);
+        res.send(JSON.stringify({"opis": "radi"}));
+    }
+
+    kreirajSesiju = async function (req, res) {
+        res.type("application/json");
+
+        let korisnik = req.body;
+        if (korisnik == undefined || korisnik == null) {
+            res.status(417);
+            res.send(JSON.stringify({"greska": "neocekivani podaci"}));
+            return;
+        }
+
+        let greske = provjeriTijeloKorisnikPrijava(korisnik);
+        if (greske != "") {
+            res.status(417);
+            res.send(JSON.stringify({"greska": greske}));
+            return;
+        }
+
+        let korime = req.params.korime;
+        if (korisnik.korime != undefined && korisnik.korime != null && korisnik.korime != "") {
+            if (korisnik.korime != korime) {
+                res.status(417);
+                res.send(JSON.stringify({"greska": "neocekivani podaci"}));
+                return;
+            }
+        } else {
+            korisnik.korime = korime;
+        }
+
+        let korisnikDAO = new KorisnikDAO(this.sol);
+        korisnikDAO.provjeriKorisnickePodatke(korisnik).then((uspjeh) => {
+            res.status(201);
+            res.send(JSON.stringify({"opis": uspjeh}));
+        }).catch((greska) => {
+            res.status(400);
+            res.send(JSON.stringify({"greska": greska.message}));
+        });
+    }
 }
 
 function provjeriTijeloKorisnik(korisnik = null) {
@@ -93,6 +137,47 @@ function provjeriTijeloKorisnik(korisnik = null) {
             if (greske != "") greske += ", ";
             greske += "neispravna mail adresa";
         }
+    }
+
+    return greske;
+}
+
+function provjeriTijeloKorisnikPrijava(korisnik = null) {
+    if (korisnik == null || korisnik == undefined) {
+        return "korisnik nije poslan";
+    }
+
+    let greske = "";
+    if ((korisnik.korime == null || korisnik.korime == undefined || (typeof korisnik.korime != "string")) && (korisnik.mail == null || korisnik.mail == undefined || (typeof korisnik.mail != "string"))) {
+        if (greske != "") greske += ", ";
+        greske += "nije uneseno korisnicko ime ili mail";
+    } else {
+        if (korisnik.korime != undefined && korisnik.korime != "" && korisnik.korime != null) {
+            if (korisnik.korime.length > 45) {
+                if (greske != "") greske += ", ";
+                greske += "korisnicko ime mora imati maksimalno 45 znakova";
+            }
+
+            if (korisnik.mail != undefined && korisnik.mail != "" && korisnik.mail != null) {
+                if (greske != "") greske += ", ";
+                greske += "samo korisnicko ime ili mail";
+            }
+        } else if (korisnik.mail != undefined && korisnik.mail != "" && korisnik.mail != null) {
+            if (korisnik.mail.length > 50) {
+                if (greske != "") greske += ", ";
+                greske += "mail adresa mora imati maksimalno 50 znakova";
+            }
+    
+            let mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!mailRegex.test(korisnik.mail)) {
+                if (greske != "") greske += ", ";
+                greske += "neispravna mail adresa";
+            }
+        }
+    } 
+    if (korisnik.lozinka == null || korisnik.lozinka == undefined || (typeof korisnik.lozinka != "string")) {
+        if (greske != "") greske += ", ";
+        greske += "nije unesena lozinka";
     }
 
     return greske;

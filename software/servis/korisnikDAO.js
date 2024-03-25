@@ -60,6 +60,42 @@ class KorisnikDAO {
 
         return "uspjesna aktivacija";
     }
+
+    provjeriKorisnickePodatke = async function(korisnik) {
+        this.baza.spojiSeNaBazu();
+        let sql = "SELECT * FROM Korisnik WHERE korime = ?;";
+        let dobiveniKorisnici = await this.baza.izvrsiUpit(sql, [korisnik.korime]);
+        if (dobiveniKorisnici.length == 0) {
+            this.baza.zatvoriVezu();
+            throw new Error("korisnik ne postoji");
+        }
+
+        let dobivenKorisnik = dobiveniKorisnici[0];
+
+        console.log(dobivenKorisnik);
+        console.log(kodovi.kreirajSHA512(korisnik.lozinka));
+
+        if (dobivenKorisnik.lozinka != kodovi.kreirajSHA512(korisnik.lozinka)) {
+            this.baza.zatvoriVezu();
+            throw new Error("neispravna lozinka");
+        }
+
+        if (dobivenKorisnik.aktivan == 0 || dobivenKorisnik.authToken != "") {
+            this.baza.zatvoriVezu();
+            throw new Error("korisnik nije aktiviran");
+        }
+
+        if (korisnik.mail != undefined) {
+            if (korisnik.mail != dobivenKorisnik.mail) {
+                this.baza.zatvoriVezu();
+                throw new Error("neispravan mail");
+            }
+        }
+
+        this.baza.zatvoriVezu();
+
+        return "uspjesna prijava";
+    }
 }
 
 module.exports = KorisnikDAO;

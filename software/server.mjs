@@ -1,4 +1,5 @@
 import express from "express";
+import sesija from "express-session";
 import RestTest from "./servis/restTest.js";
 import RestPitanja from "./servis/restPitanja.js";
 import RestKorisnik from "./servis/restKorisnik.js";
@@ -15,10 +16,17 @@ const putanja = dirname(currentModulePath);
 
 const brojPoStr = 10;
 const sol = "daskfSDFTRE54w5WefDSFDSF";
+const sesijaKljuc = "hgjupOIUjkhHJJghgdfGdfgewsdqwDRFhzTr54433466747RTHfdggerDr";
 
 const server = express();
 server.use(express.urlencoded({extended: true}));
 server.use(express.json());
+server.use(sesija({
+    secret: sesijaKljuc,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000*60*60*3},
+    resave: false
+}));
 
 restService();
 app();
@@ -36,8 +44,10 @@ function restService() {
     server.get("/api/restTest", restTest.testApi);
 
     let restKorisnik = new RestKorisnik(sol, putanja + "/aplikacija", url);
-    server.get("/api/korisnici/aktiviraj/:korime", restKorisnik.aktivirajKorisnika.bind(restKorisnik));
     server.post("/api/korisnici", restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
+    server.get("/api/korisnici/aktiviraj/:korime", restKorisnik.aktivirajKorisnika.bind(restKorisnik));
+    server.get("/api/korisnici/:korime/prijava", restKorisnik.dobijJWT.bind(restKorisnik));
+    server.post("/api/korisnici/:korime/prijava", restKorisnik.kreirajSesiju.bind(restKorisnik));
     
     let restPitanja = new RestPitanja(brojPoStr);
     server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));
