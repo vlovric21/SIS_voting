@@ -1,10 +1,54 @@
 body{
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
 }
-
+/*******************************PODNIŽJE**********************************/
 footer {
     background-color: #f78432; 
     padding: 20px;
     text-align: center;
+}
+/*******************************NAVIGACIJA**********************************/
+
+header {
+    background-color: #f78432;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.navigation ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navigation ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.logout button {
+    background-color: white;
+    color: orange;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout button:hover {
+    background-color: #f0f0f0;
 }
