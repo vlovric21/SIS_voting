@@ -30,6 +30,15 @@ class RestPitanja {
 
     postPitanja = async function (req, res) {
         res.type("application/json");
+
+        let jwtValidan = jwt.provjeriToken(req, this.jwtTajniKljuc);
+        if (!jwtValidan) {
+            res.status(401);
+            res.send(JSON.stringify({"opis": "potrebna prijava"}));
+            return;
+        }
+        let token = req.headers.authorization.split(" ")[1];
+        let korime = jwt.dajKorimeJWT(token, this.jwtTajniKljuc);
         
         let pitanje = req.body;
         let greske = provjeriTijeloPitanja(pitanje);
@@ -41,7 +50,7 @@ class RestPitanja {
         }
 
         let pitanjaDAO = new PitanjaDAO();
-        pitanjaDAO.postaviNovoPitanje(pitanje).then((id) => {
+        pitanjaDAO.postaviNovoPitanje(pitanje, korime).then((id) => {
             res.status(201);
             res.type("application/json");
             res.send(JSON.stringify({"opis": `dodano pitanje s id ${id}`}));
@@ -92,10 +101,6 @@ function provjeriTijeloPitanja(pitanje = null) {
     let greske = "";
     if (pitanje.pitanje == null || pitanje.pitanje == undefined || (typeof pitanje.pitanje != "string")) {
         greske += "nije uneseno pitanje";
-    }
-    if (pitanje.Korisnik_idKorisnik == null || pitanje.Korisnik_idKorisnik == undefined || isNaN(pitanje.Korisnik_idKorisnik)) {
-        if (greske != "") greske += ", ";
-        greske += "nije unesen ID korisnika";
     }
     if (pitanje.odabiri == null || pitanje.odabiri == undefined || (typeof pitanje.odabiri != "object")) {
         if (greske != "") greske += ", ";

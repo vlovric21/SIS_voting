@@ -24,13 +24,15 @@ class PitanjaDAO {
         return pitanja;
     }
 
-    postaviNovoPitanje = async function(pitanje) {
+    postaviNovoPitanje = async function(pitanje, korime) {
         this.baza.spojiSeNaBazu();
         let zadnjiId = 0;
         try {
             await this.baza.izvrsiUpit("BEGIN TRANSACTION");
+            let sqlKorId = "SELECT idKorisnik FROM Korisnik WHERE korime = ?;";
+            let korId = (await this.baza.izvrsiUpit(sqlKorId, [korime]))[0].idKorisnik;
             let sql = "INSERT INTO Pitanje (pitanje, Korisnik_idKorisnik) VALUES (?, ?);";
-            await this.baza.izvrsiUpit(sql, [pitanje.pitanje, pitanje.Korisnik_idKorisnik]);
+            await this.baza.izvrsiUpit(sql, [pitanje.pitanje, korId]);
             let sqlId = "SELECT last_insert_rowid() AS id";
             zadnjiId = (await this.baza.izvrsiUpit(sqlId))[0].id;
 
