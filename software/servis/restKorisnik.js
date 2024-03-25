@@ -80,6 +80,12 @@ class RestKorisnik {
                 return;
             }
 
+            if (req.session.korime != korime) {
+                res.status(401);
+                res.send(JSON.stringify({"opis": "neispravno korisnicko ime"}));
+                return;
+            }
+
             let token = jwt.kreirajToken({korime: korime}, this.jwtTajniKljuc, this.jwtValjanost);
             req.session.jwt = token;
             res.set("Authorization", `Bearer ${token}`);
@@ -125,7 +131,7 @@ class RestKorisnik {
                 req.session.korime = korisnik.korime;
 
                 res.status(201);
-                res.send(JSON.stringify({"opis": uspjeh}));
+                res.send(JSON.stringify({"korime": korisnik.korime}));
             } else {
                 res.status(400);
                 res.send(JSON.stringify({"greska": "vec postoji prijava"}));
