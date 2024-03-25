@@ -99,8 +99,15 @@ class RestKorisnik {
 
         let korisnikDAO = new KorisnikDAO(this.sol);
         korisnikDAO.provjeriKorisnickePodatke(korisnik).then((uspjeh) => {
-            res.status(201);
-            res.send(JSON.stringify({"opis": uspjeh}));
+            if (req.session.korime === null || req.session.korime === undefined) {
+                req.session.korime = korisnik.korime;
+
+                res.status(201);
+                res.send(JSON.stringify({"opis": uspjeh}));
+            } else {
+                res.status(400);
+                res.send(JSON.stringify({"greska": "vec postoji prijava"}));
+            }
         }).catch((greska) => {
             res.status(400);
             res.send(JSON.stringify({"greska": greska.message}));

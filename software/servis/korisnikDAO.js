@@ -72,9 +72,6 @@ class KorisnikDAO {
 
         let dobivenKorisnik = dobiveniKorisnici[0];
 
-        console.log(dobivenKorisnik);
-        console.log(kodovi.kreirajSHA512(korisnik.lozinka));
-
         if (dobivenKorisnik.lozinka != kodovi.kreirajSHA512(korisnik.lozinka)) {
             this.baza.zatvoriVezu();
             throw new Error("neispravna lozinka");
