@@ -9,6 +9,16 @@ class HtmlUpravitelj {
         res.send(await this.ucitajStranicu("/pocetna.html", req));
     }
 
+    uspjesnaAktivacijaStranica = async () => {
+        return await this.ucitajStranicu("/uspjesnaAktivacija.html");
+    }
+
+    neuspjesnaAktivacijaStranica = async (greska) => {
+        let str = await this.ucitajStranicu("/neuspjesnaAktivacija.html");
+        str = str.replace("#greska#", greska);
+        return str;
+    }
+
     ucitajStranicu = async (stranica) => {
         let stranice = [
             ds.readFile(this.putanja + stranica, "UTF-8"),
