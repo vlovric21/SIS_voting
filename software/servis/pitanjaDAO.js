@@ -49,6 +49,38 @@ class PitanjaDAO {
 
         return zadnjiId;
     }
+
+    zabiljeziOdgovorNaPitanje = async function (korisnikId, pitanjeId, odgovorId) {
+        this.baza.spojiSeNaBazu();
+        let sqlProvjera = "SELECT * FROM Odabir WHERE idOdabir = ? AND Pitanje_idPitanje = ?;";
+        let dobiveniOdabiri = await this.baza.izvrsiUpit(sqlProvjera, [odgovorId, pitanjeId]);
+        if (dobiveniOdabiri.length == 0) {
+            this.baza.zatvoriVezu();
+            throw new Error("takav odabir ne postoji");
+        }
+
+        try {
+            await this.baza.izvrsiUpit("BEGIN TRANSACTION");
+            let sqlOdabiriZaPitanje = "SELECT * FROM Odabir WHERE Pitanje_idPitanje = ?;";
+            let sviOdabiri = await this.baza.izvrsiUpit(sqlOdabiriZaPitanje, [pitanjeId]);
+            let sql = "";
+            let potrebnaBrisanja = [];
+            for (let odabir of sviOdabiri) {
+                sql = "DELETE FROM Odgovorio WHERE Korisnik_idKorisnik = ? AND Odabir_idOdabir = ?;";
+                potrebnaBrisanja.push(this.baza.izvrsiUpit(sql, [korisnikId, odabir.idOdabir]));
+            }
+            await Promise.all(potrebnaBrisanja);
+    
+            let sqlUnos = "INSERT INTO Odgovorio VALUES (?, ?)";
+            await this.baza.izvrsiUpit(sqlUnos, [korisnikId, odgovorId]);
+            await this.baza.izvrsiUpit("COMMIT");
+        } catch (greska) {
+            await this.baza.izvrsiUpit("ROLLBACK");
+        }
+        this.baza.zatvoriVezu();
+
+        return "uspjesno pohranjen odgovor";
+    }
 }
 
 module.exports = PitanjaDAO;

@@ -24,12 +24,6 @@ exports.provjeriToken = function(zahtjev, tajniKljucJWT) {
     return false;
 }
 
-exports.provjeriJeLiAdmin = function(token) {
-	let uloga = _dajUloguJWT(token);
-	if (uloga == "administrator") return true;
-	return false;
-}
-
 exports.ispisiDijelove = function(token) {
 	let dijelovi = token.split(".");
 	let zaglavlje =  dekodirajBase64(dijelovi[0]);
@@ -44,12 +38,6 @@ _dajKorimeJWT = function(token) {
 	let dijelovi = token.split(".");
 	let tijelo =  dekodirajBase64(dijelovi[1]);
 	return JSON.parse(tijelo).korime;
-}
-
-_dajUloguJWT = function(token) {
-	let dijelovi = token.split(".");
-	let tijelo =  dekodirajBase64(dijelovi[1]);
-	return JSON.parse(tijelo).uloga;
 }
 
 exports.dajKorimeJWT = function(token) {

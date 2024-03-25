@@ -71,7 +71,7 @@ class KorisnikDAO {
         }
         let dobivenKorisnik = dobiveniKorisnici[0];
 
-        if (dobivenKorisnik.aktivan == 0 || dobivenKorisnik.authToken != "") {
+        if (dobivenKorisnik.aktivan == 0 || (dobivenKorisnik.authToken != "" && dobivenKorisnik.authToken != null)) {
             this.baza.zatvoriVezu();
             throw new Error("korisnik nije aktiviran");
         }
@@ -97,7 +97,7 @@ class KorisnikDAO {
             throw new Error("neispravna lozinka");
         }
 
-        if (dobivenKorisnik.aktivan == 0 || dobivenKorisnik.authToken != "") {
+        if (dobivenKorisnik.aktivan == 0 || (dobivenKorisnik.authToken != "" && dobivenKorisnik.authToken != null)) {
             this.baza.zatvoriVezu();
             throw new Error("korisnik nije aktiviran");
         }
@@ -112,6 +112,21 @@ class KorisnikDAO {
         this.baza.zatvoriVezu();
 
         return "uspjesna prijava";
+    }
+
+    dajIdKorisnika = async function(korime) {
+        this.baza.spojiSeNaBazu();
+        let sql = "SELECT idKorisnik FROM Korisnik WHERE korime = ? AND aktivan = 1;";
+        let dobiveniKorisnici = await this.baza.izvrsiUpit(sql, [korime]);
+        if (dobiveniKorisnici.length == 0) {
+            this.baza.zatvoriVezu();
+            throw new Error("ne postoji korisnik");
+        }
+
+        let id = dobiveniKorisnici[0].idKorisnik;
+        this.baza.zatvoriVezu();
+
+        return id;
     }
 }
 

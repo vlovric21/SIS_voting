@@ -51,9 +51,10 @@ function restService() {
     server.get("/api/korisnici/:korime/prijava", restKorisnik.dobijJWT.bind(restKorisnik));
     server.post("/api/korisnici/:korime/prijava", restKorisnik.kreirajSesiju.bind(restKorisnik));
     
-    let restPitanja = new RestPitanja(brojPoStr);
+    let restPitanja = new RestPitanja(sol, brojPoStr, jwtTajniKljuc, jwtValjanost);
     server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));
     server.post("/api/pitanja", restPitanja.postPitanja.bind(restPitanja));
+    server.put("/api/pitanja/:pitanjeId/:odgovorId", restPitanja.putPitanja.bind(restPitanja));
 }
 
 function app() {
