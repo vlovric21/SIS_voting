@@ -13,6 +13,8 @@ const putanja = dirname(currentModulePath);
 const server = express();
 server.use(express.urlencoded({extended: true}));
 
+server.use("/css", express.static("./aplikacija/style.css"));
+
 restService();
 app();
 
