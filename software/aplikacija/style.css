@@ -138,7 +138,7 @@ form button{
     color: black;
     margin: 0.5rem;
     border: none;
-    padding: 0.5rem 1rem; 
+    padding: 0.5rem 2rem; 
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -175,4 +175,51 @@ form button:hover{
 
 input[type="submit"]:focus {
     outline: none; 
+}
+
+/****************************PRIJAVA**********************************/
+.container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h1 {
+    color: #000000;
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form p {
+    margin-top: 2rem;
+}
+
+p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
 }
