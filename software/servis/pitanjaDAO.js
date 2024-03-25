@@ -5,10 +5,21 @@ class PitanjaDAO {
         this.baza = new Baza("baza.sqlite");
     }
 
-    dobijPitanjaIOdgovore = async function(str = 1, pitanjaPoStr) {
+    dobijPitanjaIOdgovore = async function(str = 1, pitanjaPoStr, korime) {
         this.baza.spojiSeNaBazu();
-        let sql = "SELECT * FROM Pitanje LIMIT ? OFFSET ?;";
+        let sql = "SELECT Pitanje.idPitanje, Pitanje.pitanje, Korisnik.korime AS autor FROM Pitanje LEFT JOIN Korisnik ON Pitanje.Korisnik_idKorisnik = Korisnik.idKorisnik LIMIT ? OFFSET ?;";
         let pitanja = await this.baza.izvrsiUpit(sql, [pitanjaPoStr, (str - 1)*pitanjaPoStr]);
+
+        let korId = -1;
+        if (korime != null) {
+            let sqlKorId = "SELECT idKorisnik FROM Korisnik WHERE korime = ?;";
+            korId = (await this.baza.izvrsiUpit(sqlKorId, [korime]))[0].idKorisnik;
+            for (let pitanje of pitanja) {
+                if (pitanje.autor == korime) {
+                    pitanje.prijavljenNapisao = true;
+                }
+            }
+        }
 
         let potrebniOdabiri = [];
         for (let pitanje of pitanja) {
@@ -16,7 +27,38 @@ class PitanjaDAO {
             potrebniOdabiri.push(this.baza.izvrsiUpit(sql, [pitanje.idPitanje]));
         }
         let dobiveniOdabiri = await Promise.all(potrebniOdabiri);
+        let sqlPostoji = "";
+        let imaOdgovor = false;
         for (let pitanjeId in pitanja) {
+            imaOdgovor = false;
+            if (korime != null) {
+                for (let dobivenOdabir of dobiveniOdabiri[pitanjeId]) {
+                    sqlPostoji = "SELECT * FROM Odgovorio WHERE Odabir_idOdabir = ? AND Korisnik_idKorisnik = ?;";
+                    let rezultat = await this.baza.izvrsiUpit(sqlPostoji, [dobivenOdabir.idOdabir, korId]);
+                    if (rezultat.length > 0) {
+                        imaOdgovor = true;
+                        dobivenOdabir.odgovorioPrijavljen = true;
+                    }
+                }
+
+                if (pitanja[pitanjeId].prijavljenNapisao || imaOdgovor) {
+                    let sqlUkupno = "SELECT COUNT(*) AS ukupnoOdg FROM Odgovorio WHERE Odabir_idOdabir IN (SELECT idOdabir FROM Odabir WHERE Pitanje_idPitanje = ?);";
+                    let ukupnoOdg = await this.baza.izvrsiUpit(sqlUkupno, [pitanja[pitanjeId].idPitanje]);
+                    pitanja[pitanjeId].ukupnoOdgovora = ukupnoOdg[0].ukupnoOdg;
+
+                    let sqlBrojNaOdabir = "";
+                    let potrebniBrojevi = [];
+                    for (let dobivenOdabir of dobiveniOdabiri[pitanjeId]) {
+                        sqlBrojNaOdabir = "SELECT COUNT(*) AS ukupnoOdg FROM Odgovorio WHERE Odabir_idOdabir = ?;";
+                        potrebniBrojevi.push(this.baza.izvrsiUpit(sqlBrojNaOdabir, dobivenOdabir.idOdabir));
+                    }
+                    let dobiveniBrojevi = await Promise.all(potrebniBrojevi);
+                    for (let dobivenOdabirId in dobiveniOdabiri[pitanjeId]) {
+                        dobiveniOdabiri[pitanjeId][dobivenOdabirId].brojOdgovora = dobiveniBrojevi[dobivenOdabirId][0].ukupnoOdg;
+                    }
+                }
+            }
+
             pitanja[pitanjeId].odabiri = dobiveniOdabiri[pitanjeId];
         }
 

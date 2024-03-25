@@ -16,12 +16,22 @@ class RestPitanja {
             stranica = 1;
         }
 
+        let jwtValidan = jwt.provjeriToken(req, this.jwtTajniKljuc);
+        if (!jwtValidan) {
+            res.status(401);
+            res.send(JSON.stringify({"opis": "potrebna prijava"}));
+            return;
+        }
+        let token = req.headers.authorization.split(" ")[1];
+        let korime = jwt.dajKorimeJWT(token, this.jwtTajniKljuc);
+
         let pitanjaDAO = new PitanjaDAO();
-        pitanjaDAO.dobijPitanjaIOdgovore(stranica, this.brojPoStr).then((podaci) => {
+        pitanjaDAO.dobijPitanjaIOdgovore(stranica, this.brojPoStr, korime).then((podaci) => {
             res.status(200);
             res.type("application/json");
             res.send(JSON.stringify(podaci));
         }).catch((greska) => {
+            console.log(greska);
             res.status(400);
             res.type("application/json");
             res.send(JSON.stringify({"greska": greska}));
