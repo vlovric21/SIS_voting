@@ -5,6 +5,10 @@ class HtmlUpravitelj {
         this.putanja = putanja;
     }
 
+    prijava = async (req, res) => {
+        res.send(await this.ucitajStranicu("/prijava.html", req));  // ovo je samo za posluživanje, nema logike
+    }
+
     pocetnaStranica = async (req, res) => {
         res.send(await this.ucitajStranicu("/pocetna.html", req));
     }
