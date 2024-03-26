@@ -191,7 +191,7 @@ input[type="submit"]:focus {
 .login-form,
 .registration-form {
     background-color: #ffffff;
-    padding: 40px;
+    padding: 3.5rem;
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -208,7 +208,7 @@ input[type="submit"]:focus {
 }
 
 .input-container input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
