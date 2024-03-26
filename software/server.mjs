@@ -14,6 +14,7 @@ const server = express();
 server.use(express.urlencoded({extended: true}));
 
 server.use("/css", express.static("./aplikacija/style.css"));
+server.use("/js", express.static("./aplikacija/js"));
 
 restService();
 app();
