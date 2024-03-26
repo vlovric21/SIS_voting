@@ -19,21 +19,17 @@
             <div id="pitanje">
                 <input id="pitanje-input" type="text">
             </div>
-            <div>
-                <button class="vrsta-odgovora">Jednostruki odgovor</button>
-                <button class="vrsta-odgovora">Višestruki  odgovor</button>
+            <div id="gumbi">
+                <button type="button" class="vrsta-odgovora" id="jednostruki-gumb">Jednostruki odgovor</button>
+                <button type="button" class="vrsta-odgovora" id="visestruki-gumb">Višestruki  odgovor</button>
             </div>
-            <div>#odgovori#</div>
-
-            <input type="radio" id="odgovor1" name="odgovor" value="Odgovor 1">
-            <label for="odgovor1">Odgovor 1</label><br>
-
-            <input type="checkbox" id="checkbox" name="checkbox" value="Da">
-            <label for="checkbox">Da</label><br>
+            <div id="odgovori"></div>
+            
 
             <input type="submit" value="Pošalji">
         </form>
     </div>
     #podnozje#
+    <script src="/js/novo-pitanje.js"></script>
 </body>
 </html>

@@ -179,6 +179,15 @@ input[type="submit"]:focus {
     outline: none; 
 }
 
+.dodaj-izbor{
+    display: inline-block;
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
 /****************************PRIJAVA/REGISTRACIJA**********************************/
 .container-login,
 .container-registration {
