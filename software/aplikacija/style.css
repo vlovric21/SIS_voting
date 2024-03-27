@@ -98,6 +98,29 @@ header {
     color: white;
     font-size: large;
 }
+
+.kartica-pitanja {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.autor {
+    float: right;
+    font-size: 14px;
+    color: #888;
+}
+
+.naslov-pitanja {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
 /***********************FORMA*NOVO*PITANJE***************************/
 .container {
     width: 50%;
@@ -119,8 +142,8 @@ label {
     display: inline-block;
 }
 
-textarea, input[type="radio"], input[type="checkbox"], input[type="submit"] {
-    margin-bottom: 10px;
+input[type="radio"], input[type="checkbox"], input[type="submit"] {
+    margin: 0.5rem;
 }
 
 input[type="submit"]{
@@ -255,3 +278,4 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
+/************************KARTICA*PITANJA********************************/
