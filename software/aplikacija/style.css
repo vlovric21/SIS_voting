@@ -148,8 +148,10 @@ form button{
     line-height: 24px;
     font-size: 20px;
     width: 99%;
-    height: 2rem;
-    border: none;
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px;
 }
 
 #addButton{

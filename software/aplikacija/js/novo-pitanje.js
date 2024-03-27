@@ -35,7 +35,8 @@ function jednostrukiOdgovori(){
         vrijednosti.push(vrijednostOpcija);
         brojac ++;
 
-        if(brojac <= 10 && provjeraVrijednosti && vrijednostOpcija != ""){
+            let divOpcija = document.createElement("div");
+            divOpcija.setAttribute("class", "jedna-opcija");
 
             let radioInput = document.createElement("input");
             radioInput.setAttribute("type", "radio");
@@ -52,6 +53,11 @@ function jednostrukiOdgovori(){
             odgovori.appendChild(radioInput);
             odgovori.appendChild(label);
             odgovori.appendChild(razmak);
+            divOpcija.appendChild(radioInput);
+            divOpcija.appendChild(label);
+            divOpcija.appendChild(deleteButton);
+
+            odgovori.appendChild(divOpcija);
             
             document.getElementById("opcijaInput").value = "";
         }
