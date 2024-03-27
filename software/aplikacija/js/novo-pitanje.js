@@ -21,9 +21,9 @@ function jednostrukiOdgovori(){
     odgovori.innerHTML += "<input id='opcijaInput' class='dodaj-izbor' type='text' placeholder ='Opcija'>";
     odgovori.innerHTML += "<button id='addButton' type='button' class='vrsta-odgovora'>+</button><br>";
 
-    let dodajOpciju = document.getElementById("addButton");
+    let dodajJednostruki = document.getElementById("addButton");
     var brojac = 1;
-    dodajOpciju.addEventListener("click", () =>{
+    dodajJednostruki.addEventListener("click", () =>{
         let vrijednostOpcija = document.getElementById("opcijaInput").value;
         let provjeraVrijednosti = true;
         
@@ -35,7 +35,7 @@ function jednostrukiOdgovori(){
         vrijednosti.push(vrijednostOpcija);
         brojac ++;
 
-        if(brojac <= 10 && provjeraVrijednosti){
+        if(brojac <= 10 && provjeraVrijednosti && vrijednostOpcija != ""){
 
             let radioInput = document.createElement("input");
             radioInput.setAttribute("type", "radio");
@@ -55,15 +55,51 @@ function jednostrukiOdgovori(){
             
             document.getElementById("opcijaInput").value = "";
         }
-        
     });
 }
 
 function visestrukiOdgovori(){
     let odgovori = document.getElementById("odgovori");
+    let vrijednosti = [];
 
     odgovori.innerHTML = "<h2>Dodaj višestruki izbor</h2>";
 
     odgovori.innerHTML += "<input id='opcijaInput' class='dodaj-izbor' type='text' placeholder ='Opcija'>";
-    odgovori.innerHTML += "<button id='addButton' class='vrsta-odgovora'>+</button>";
+    odgovori.innerHTML += "<button id='addButton' type='button' class='vrsta-odgovora'>+</button><br>";
+
+    let dodajVisestruki = document.getElementById("addButton");
+    var brojac = 1;
+    dodajVisestruki.addEventListener("click", () =>{
+        let vrijednostOpcija = document.getElementById("opcijaInput").value;
+        let provjeraVrijednosti = true;
+        
+            vrijednosti.forEach((element)=>{
+                if(element === vrijednostOpcija)
+                provjeraVrijednosti = false;
+            });
+
+        vrijednosti.push(vrijednostOpcija);
+        brojac ++;
+
+        if(brojac <= 10 && provjeraVrijednosti && vrijednostOpcija != ""){
+
+            let radioInput = document.createElement("input");
+            radioInput.setAttribute("type", "checkbox");
+            radioInput.setAttribute("name", vrijednostOpcija)
+            radioInput.setAttribute("value", vrijednostOpcija);
+            radioInput.setAttribute("id", `opcija${brojac}`);
+    
+            let label = document.createElement("label");
+            label.setAttribute("for", `opcija${brojac}`);
+            label.innerText = vrijednostOpcija;
+    
+            let razmak = document.createElement("br");
+    
+            odgovori.appendChild(radioInput);
+            odgovori.appendChild(label);
+            odgovori.appendChild(razmak);
+            
+            document.getElementById("opcijaInput").value = "";
+        }
+    });
 }
