@@ -5,8 +5,28 @@ class HtmlUpravitelj {
         this.putanja = putanja;
     }
 
-    pocetnaStranica = async (req, res) => {
+    prijava = async (req, res) => {
+        // ovdje će se odvijati redirekcija na odjavu (ili početnu bolje?) ako je već prijavljen
+        res.send(await this.ucitajStranicu("/prijava.html", req));  // ovo je samo za posluživanje, nema logike
+    }
+
+    registracija = async (req, res) => {
+        res.send(await this.ucitajStranicu("/registracija.html", req));  // ovo je samo za posluživanje, nema logike
+    }
+
+    pocetnaStranica = async (req, res) => { 
+        // ovdje će se odvijati redirekcija na prijavu ako nije prijavljen
         res.send(await this.ucitajStranicu("/pocetna.html", req));
+    }
+
+    novoPitanje = async (req, res) => {
+        // ovdje će se odvijati redirekcija na prijavu ako nije prijavljen
+        res.send(await this.ucitajStranicu("/novo-pitanje.html", req));
+    }
+
+    odjava = async (req, res) => {
+        // ovdje će se odvijati redirekcija na prijavu ako nije prijavljen
+        res.send(await this.ucitajStranicu("/odjava.html", req)); // ovo je samo za posluživanje, nema logike
     }
 
     uspjesnaAktivacijaStranica = async () => {

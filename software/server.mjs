@@ -30,6 +30,9 @@ server.use(sesija({
     resave: false
 }));
 
+server.use("/css", express.static("./aplikacija/style.css"));
+server.use("/js", express.static("./aplikacija/js"));
+
 restService();
 app();
 
@@ -61,4 +64,8 @@ function app() {
     let htmlUpravitelj = new HtmlUpravitelj(putanja + "/aplikacija");
 
     server.get("/pocetna", htmlUpravitelj.pocetnaStranica.bind(htmlUpravitelj));
+    server.get("/novo-pitanje", htmlUpravitelj.novoPitanje.bind(htmlUpravitelj));
+    server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));    //ovo maknuti i staviti putanje za prijavu ne samo posluživanje
+    server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj));    //ovo maknuti i staviti putanje za prijavu ne samo posluživanje
+    server.get("/odjava", htmlUpravitelj.odjava.bind(htmlUpravitelj));    //ovo maknuti i staviti putanje za prijavu ne samo posluživanje
 }

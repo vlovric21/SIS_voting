@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="hr">
+<head>
+    <title>Novo pitanje</title>
+    <meta charset="utf-8">
+    <meta name="autor" content="David Matijanić, Viktor Lovrić, Magdalena Markovinović">
+    <link rel="stylesheet" type="text/css" href="/css">
+    <script src="https://kit.fontawesome.com/364874f9c3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    #zaglavlje#
+    <div class="big-heading">
+        <h1>Novo pitanje</h1>
+    </div>
+    <div class="container">
+        <form action="#" method="POST" class="form">
+            <h2>Postavite pitanje:</h2>
+            <input id="pitanje-input" type="text">
+            
+            <div id="gumbi">
+                <button type="button" class="vrsta-odgovora" id="jednostruki-gumb">Jednostruki odgovor</button>
+                <button type="button" class="vrsta-odgovora" id="visestruki-gumb">Višestruki  odgovor</button>
+            </div>
+            <div id="odgovori"></div>
+            
+
+            <input type="submit" value="Pošalji">
+        </form>
+    </div>
+    #podnozje#
+    <script src="/js/novo-pitanje.js"></script>
+</body>
+</html>
