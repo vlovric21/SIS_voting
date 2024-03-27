@@ -19,10 +19,12 @@ class Baza {
     izvrsiUpit(sql,podaciZaSQL){
         return new Promise((uspjeh,neuspjeh)=>{
             this.vezaDB.all(sql,podaciZaSQL,(greska,rezultat)=>{
-                if(greska)
+                if(greska) {
                     neuspjeh(greska);
-                else    
+                } else {
                     uspjeh(rezultat);
+                }
+                    
             });
         }); 
     }
