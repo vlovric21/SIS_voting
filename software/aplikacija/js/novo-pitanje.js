@@ -52,7 +52,7 @@ function jednostrukiOdgovori(){
 
             let deleteButton = document.createElement("button");
             deleteButton.innerText = "Izbiši";
-            
+
             deleteButton.addEventListener("click", () => {
                 odgovori.removeChild(divOpcija);
                 brojac--;
@@ -89,10 +89,9 @@ function visestrukiOdgovori(){
                 provjeraVrijednosti = false;
             });
 
-        vrijednosti.push(vrijednostOpcija);
-        brojac ++;
-
         if(brojac <= 10 && provjeraVrijednosti && vrijednostOpcija != ""){
+            vrijednosti.push(vrijednostOpcija);
+            brojac ++;
 
             let divOpcija = document.createElement("div");
             divOpcija.setAttribute("class", "jedna-opcija");
@@ -107,11 +106,17 @@ function visestrukiOdgovori(){
             label.setAttribute("for", `opcija${brojac}`);
             label.innerText = vrijednostOpcija;
 
-            let razmak = document.createElement("br");
-
+            let deleteButton = document.createElement("button");
+            deleteButton.innerText = "Izbiši";
+            
+            deleteButton.addEventListener("click", () => {
+                odgovori.removeChild(divOpcija);
+                brojac--;
+            });
+    
             divOpcija.appendChild(radioInput);
             divOpcija.appendChild(label);
-            divOpcija.appendChild(razmak);
+            divOpcija.appendChild(deleteButton);
 
             odgovori.appendChild(divOpcija);
 
