@@ -39,4 +39,5 @@ function app() {
     server.get("/novo-pitanje", htmlUpravitelj.novoPitanje.bind(htmlUpravitelj));
     server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));    //ovo maknuti i staviti putanje za prijavu ne samo posluživanje
     server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj));    //ovo maknuti i staviti putanje za prijavu ne samo posluživanje
+    server.get("/odjava", htmlUpravitelj.odjava.bind(htmlUpravitelj));    //ovo maknuti i staviti putanje za prijavu ne samo posluživanje
 }
