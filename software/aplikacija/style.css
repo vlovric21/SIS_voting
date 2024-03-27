@@ -145,8 +145,6 @@ form button{
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 #pitanje-input{
-    line-height: 24px;
-    font-size: 20px;
     width: 99%;
     padding: 0.4rem;
     border: 1px solid #ccc;
@@ -189,7 +187,16 @@ input[type="submit"]:focus {
     font-size: 16px;
 }
 
+.jedna-opcija {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
+.jedna-opcija button{
+    margin: 0 0 0 1rem;
+    padding: 0.5rem;
+}
+
 input[type="radio"] {
     margin-right: 0.5rem;
     width: 1rem;
@@ -198,6 +205,8 @@ input[type="radio"] {
     border-radius: 50%;
     cursor: pointer;
 }
+
+
 /****************************PRIJAVA/REGISTRACIJA**********************************/
 .container-login,
 .container-registration {

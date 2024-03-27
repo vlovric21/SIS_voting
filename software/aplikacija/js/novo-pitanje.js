@@ -32,8 +32,10 @@ function jednostrukiOdgovori(){
                 provjeraVrijednosti = false;
             });
 
-        vrijednosti.push(vrijednostOpcija);
-        brojac ++;
+            
+        if(brojac <= 10 && provjeraVrijednosti && vrijednostOpcija != ""){
+            vrijednosti.push(vrijednostOpcija);
+            brojac ++;
 
             let divOpcija = document.createElement("div");
             divOpcija.setAttribute("class", "jedna-opcija");
@@ -47,12 +49,15 @@ function jednostrukiOdgovori(){
             let label = document.createElement("label");
             label.setAttribute("for", `opcija${brojac}`);
             label.innerText = vrijednostOpcija;
+
+            let deleteButton = document.createElement("button");
+            deleteButton.innerText = "Izbiši";
+            
+            deleteButton.addEventListener("click", () => {
+                odgovori.removeChild(divOpcija);
+                brojac--;
+            });
     
-            let razmak = document.createElement("br");
-    
-            odgovori.appendChild(radioInput);
-            odgovori.appendChild(label);
-            odgovori.appendChild(razmak);
             divOpcija.appendChild(radioInput);
             divOpcija.appendChild(label);
             divOpcija.appendChild(deleteButton);
@@ -89,23 +94,29 @@ function visestrukiOdgovori(){
 
         if(brojac <= 10 && provjeraVrijednosti && vrijednostOpcija != ""){
 
+            let divOpcija = document.createElement("div");
+            divOpcija.setAttribute("class", "jedna-opcija");
+
             let radioInput = document.createElement("input");
             radioInput.setAttribute("type", "checkbox");
-            radioInput.setAttribute("name", vrijednostOpcija)
+            radioInput.setAttribute("name", "opcija");
             radioInput.setAttribute("value", vrijednostOpcija);
             radioInput.setAttribute("id", `opcija${brojac}`);
-    
+
             let label = document.createElement("label");
             label.setAttribute("for", `opcija${brojac}`);
             label.innerText = vrijednostOpcija;
-    
+
             let razmak = document.createElement("br");
-    
-            odgovori.appendChild(radioInput);
-            odgovori.appendChild(label);
-            odgovori.appendChild(razmak);
-            
+
+            divOpcija.appendChild(radioInput);
+            divOpcija.appendChild(label);
+            divOpcija.appendChild(razmak);
+
+            odgovori.appendChild(divOpcija);
+
             document.getElementById("opcijaInput").value = "";
+
         }
     });
 }
