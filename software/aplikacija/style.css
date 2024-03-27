@@ -53,8 +53,10 @@ header {
     color: white;
 }
 
-.logout button {
+.logout a {
     background-color: white;
+    text-decoration: none;
+    font-size: medium;
     color: #f78432;
     border: none;
     padding: 10px 20px;
@@ -278,4 +280,35 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
-/************************KARTICA*PITANJA********************************/
+/************************ODJAVA****************************/
+
+#odjava{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.odjava-kartica {
+    width: 50%;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+}
+
+.odjava-kartica h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.odjava-kartica a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.odjava-kartica a:hover {
+    color: #fc701f;
+}
