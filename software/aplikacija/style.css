@@ -117,7 +117,6 @@ header {
 
 label {
     display: inline-block;
-    margin-bottom: 10px;
 }
 
 textarea, input[type="radio"], input[type="checkbox"], input[type="submit"] {
@@ -138,7 +137,7 @@ form button{
     background-color: rgb(221, 221, 221);
     font-size: 1rem;
     color: black;
-    margin: 0.5rem;
+    margin:  1rem 1rem 1rem 0;
     border: none;
     padding: 0.5rem 2rem; 
     border-radius: 10px;
@@ -152,9 +151,9 @@ form button{
     height: 2rem;
     border: none;
 }
-#pitanje{
-    border: 1px solid black;
-    border-radius: 5px;
+
+#addButton{
+    margin-left: 1rem;
 }
 
 input:focus,
@@ -188,6 +187,15 @@ input[type="submit"]:focus {
     font-size: 16px;
 }
 
+}
+input[type="radio"] {
+    margin-right: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+}
 /****************************PRIJAVA/REGISTRACIJA**********************************/
 .container-login,
 .container-registration {
