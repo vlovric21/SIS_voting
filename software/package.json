@@ -4,12 +4,16 @@
   "description": "",
   "main": "server.mjs",
   "scripts": {
-    "pripremi": "npm link --save express sqlite3 express-session",
+    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken nodemailer",
     "start": "node server.mjs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "file:../../../../../../usr/lib/node_modules/express"
+    "express": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/express",
+    "express-session": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/express-session",
+    "jsonwebtoken": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/jsonwebtoken",
+    "nodemailer": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/nodemailer",
+    "sqlite3": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/sqlite3"
   }
 }
