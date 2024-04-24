@@ -108,6 +108,7 @@ class RestKorisnik {
         }
 
         let greske = provjeriTijeloKorisnikPrijava(korisnik);
+        greske += ", " + provjeriTotpKorisnikPrijava(korisnik);
         if (greske != "") {
             res.status(417);
             res.send(JSON.stringify({"greska": greske}));
@@ -172,6 +173,22 @@ function provjeriTijeloKorisnik(korisnik = null) {
         if (!mailRegex.test(korisnik.mail)) {
             if (greske != "") greske += ", ";
             greske += "neispravna mail adresa";
+        }
+    }
+
+    return greske;
+}
+
+function provjeriTotpKorisnikPrijava(korisnik = null){
+    let greske = "";
+    if(korisnik.totp == null || korisnik.totp == undefined){
+        if(greske != "") greske += ", ";
+        greske += "nije unesen totp";
+    }else{
+        let totpRegex = /^\d{6}$/;
+        if(!totpRegex.test(korisnik.totp)){
+            if (greske != "") greske += ", ";
+                greske += "neispravan format za totp";
         }
     }
 
