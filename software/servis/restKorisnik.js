@@ -55,10 +55,11 @@ class RestKorisnik {
 
         let korisnikDAO = new KorisnikDAO(this.sol);
         let htmlUpravitelj = new HtmlUpravitelj(this.putanja);
-        korisnikDAO.aktivirajKorisnika(korime, token).then(async (uspjeh) => {
+        korisnikDAO.aktivirajKorisnika(korime, token).then(async (tajniKljuc) => {
             res.status(200);
             res.type("text/html");
             let str = await htmlUpravitelj.uspjesnaAktivacijaStranica();
+            str = str.replace("#tajniKljuc#", tajniKljuc);
             res.send(str);
         }).catch(async (greska) => {
             res.status(200);
@@ -108,6 +109,7 @@ class RestKorisnik {
         }
 
         let greske = provjeriTijeloKorisnikPrijava(korisnik);
+        greske += provjeriTotpKorisnikPrijava(korisnik);
         if (greske != "") {
             res.status(417);
             res.send(JSON.stringify({"greska": greske}));
@@ -161,7 +163,8 @@ function provjeriTijeloKorisnik(korisnik = null) {
     if (korisnik.mail == null || korisnik.mail == undefined || (typeof korisnik.mail != "string")) {
         if (greske != "") greske += ", ";
         greske += "nije unesena mail adresa";
-    } else {
+    }
+    else {
         if (korisnik.mail.length > 50) {
             if (greske != "") greske += ", ";
             greske += "mail adresa mora imati maksimalno 50 znakova";
@@ -171,6 +174,22 @@ function provjeriTijeloKorisnik(korisnik = null) {
         if (!mailRegex.test(korisnik.mail)) {
             if (greske != "") greske += ", ";
             greske += "neispravna mail adresa";
+        }
+    }
+
+    return greske;
+}
+
+function provjeriTotpKorisnikPrijava(korisnik = null){
+    let greske = "";
+    if(korisnik.totp == null || korisnik.totp == undefined){
+        if(greske != "") greske += ", ";
+        greske += "nije unesen totp";
+    }else{
+        let totpRegex = /^\d{6}$/;
+        if(!totpRegex.test(korisnik.totp)){
+            if (greske != "") greske += ", ";
+                greske += "neispravan format za totp";
         }
     }
 
