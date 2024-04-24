@@ -161,7 +161,8 @@ function provjeriTijeloKorisnik(korisnik = null) {
     if (korisnik.mail == null || korisnik.mail == undefined || (typeof korisnik.mail != "string")) {
         if (greske != "") greske += ", ";
         greske += "nije unesena mail adresa";
-    } else {
+    }
+    else {
         if (korisnik.mail.length > 50) {
             if (greske != "") greske += ", ";
             greske += "mail adresa mora imati maksimalno 50 znakova";
