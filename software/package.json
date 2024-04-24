@@ -4,16 +4,19 @@
   "description": "",
   "main": "server.mjs",
   "scripts": {
-    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken nodemailer",
+    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken nodemailer totp-generator base32-encoding crypto",
     "start": "node server.mjs"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "base32-encoding": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/base32-encoding",
+    "crypto": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/crypto",
     "express": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/express",
     "express-session": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/express-session",
     "jsonwebtoken": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/jsonwebtoken",
     "nodemailer": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/nodemailer",
-    "sqlite3": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/sqlite3"
+    "sqlite3": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/sqlite3",
+    "totp-generator": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/totp-generator"
   }
 }
