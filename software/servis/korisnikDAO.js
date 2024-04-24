@@ -1,5 +1,6 @@
 const Baza = require("./baza/baza.js");
 const kodovi = require("./moduli/kodovi.js");
+const tfa = require("./moduli/2fa.js");
 
 class KorisnikDAO {
     constructor(sol) {
@@ -21,8 +22,8 @@ class KorisnikDAO {
             throw new Error("korisnik s tim mailom vec postoji");
         }
 
-        let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan, authToken) VALUES (?, ?, ?, 0, ?);";
-        await this.baza.izvrsiUpit(sql, [korisnik.korime, kodovi.kreirajSHA512(korisnik.lozinka, this.sol), korisnik.mail, kodovi.kreirajSHA512(authToken)]);
+        let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan, authToken, tajniKljuc) VALUES (?, ?, ?, 0, ?, ?);";
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, kodovi.kreirajSHA512(korisnik.lozinka, this.sol), korisnik.mail, kodovi.kreirajSHA512(authToken), tfa.kreirajTajniKljuc(korisnik.korime)]);
 
         this.baza.zatvoriVezu();
 
