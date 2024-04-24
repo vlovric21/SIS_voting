@@ -59,7 +59,7 @@ class KorisnikDAO {
 
         this.baza.zatvoriVezu();
 
-        return "uspjesna aktivacija";
+        return korisnik.tajniKljuc;
     }
 
     provjeriPostojanjeKorisnika = async function(korime) {

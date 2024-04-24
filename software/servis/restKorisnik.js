@@ -55,10 +55,11 @@ class RestKorisnik {
 
         let korisnikDAO = new KorisnikDAO(this.sol);
         let htmlUpravitelj = new HtmlUpravitelj(this.putanja);
-        korisnikDAO.aktivirajKorisnika(korime, token).then(async (uspjeh) => {
+        korisnikDAO.aktivirajKorisnika(korime, token).then(async (tajniKljuc) => {
             res.status(200);
             res.type("text/html");
             let str = await htmlUpravitelj.uspjesnaAktivacijaStranica();
+            str = str.replace("#tajniKljuc#", tajniKljuc);
             res.send(str);
         }).catch(async (greska) => {
             res.status(200);
@@ -108,7 +109,7 @@ class RestKorisnik {
         }
 
         let greske = provjeriTijeloKorisnikPrijava(korisnik);
-        greske += ", " + provjeriTotpKorisnikPrijava(korisnik);
+        greske += provjeriTotpKorisnikPrijava(korisnik);
         if (greske != "") {
             res.status(417);
             res.send(JSON.stringify({"greska": greske}));
