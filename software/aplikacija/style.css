@@ -319,3 +319,28 @@ p a:hover {
 .odjava-kartica a:hover {
     color: #fc701f;
 }
+
+/******************(NE)USPJEPNA*AKTIVACIJA******************/
+.activation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.aktivacija-unutra{
+    background-color: #ffffff;
+    padding: 3.5rem;
+    border-radius: 8px;
+    text-align: left;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 35%;
+}
+
+.aktivacija-unutra a{
+    text-decoration: none;
+    color: #f78432;
+}
+.aktivacija-unutra a:hover{
+    color: blue;
+}
