@@ -32,8 +32,9 @@ _dajNasumicniBroj = function(min, max) {
 
 exports.encrypt = function(tekst, kljuc, iv){
 	const algorithm = 'aes-256-cbc';
+	const ivBuffer = Buffer.from(iv, 'hex');
 
-	const cipher = crypto.createCipheriv(algorithm, kljuc, iv);
+	const cipher = crypto.createCipheriv(algorithm, kljuc, ivBuffer);
 	let encrypted = cipher.update(tekst, 'utf8', 'hex');
 	encrypted += cipher.final('hex');
 	return encrypted;
@@ -41,8 +42,9 @@ exports.encrypt = function(tekst, kljuc, iv){
 
 exports.decrypt = function(tekstEnk, kljuc, iv){
 	const algorithm = 'aes-256-cbc';
+	const ivBuffer = Buffer.from(iv, 'hex');
 
-	const decipher = crypto.createDecipheriv(algorithm, kljuc, iv);
+	const decipher = crypto.createDecipheriv(algorithm, kljuc, ivBuffer);
 	try{
 		let decrypted = decipher.update(tekstEnk, 'hex', 'utf8');
 		decrypted += decipher.final('utf8');
