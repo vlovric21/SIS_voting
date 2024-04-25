@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const ds = require("fs");
+
 
 exports.kreirajSHA512 = function(tekst) {
 	const hash = crypto.createHash('sha512');
@@ -55,4 +57,17 @@ exports.decrypt = function(tekstEnk, kljuc, iv){
 		console.error('Decryption error:', error.message);
         return null;
 	}
+}
+
+let k = ds.readFileSync(__dirname + "/k.json");
+const data = JSON.parse(k);
+
+exports.dajPodatke = function(){
+	const polje = [
+		data.a[23],
+    	data.b[16],
+    	data.a[11],
+    	data.b[27], 
+	];
+	return polje;
 }

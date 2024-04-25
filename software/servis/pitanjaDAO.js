@@ -1,11 +1,13 @@
 const Baza = require("./baza/baza.js");
 const kodovi = require("./moduli/kodovi.js");
 
-const key1 = '67d9e29d03d42dcfd9a1868db4e2af5c1da3f0df799aa03c6a206682cfb5d6d1';
-const iv1 = '02e17c33e42d9e2b1c77d1b6d9a6f1bc';
+//const key1 = '67d9e29d03d42dcfd9a1868db4e2af5c1da3f0df799aa03c6a206682cfb5d6d1';
+//const iv1 = '02e17c33e42d9e2b1c77d1b6d9a6f1bc';
 
-const key2 = 'fcbffbb4e4d822df40a4cb9ebf1085d898b83749bc98c8283ab2fd4f4b0b0a8f';
-const iv2 = 'f8c59a8f4b9ae17c80879250c4371188';
+//const key2 = 'fcbffbb4e4d822df40a4cb9ebf1085d898b83749bc98c8283ab2fd4f4b0b0a8f';
+//const iv2 = 'f8c59a8f4b9ae17c80879250c4371188';
+
+const polje = kodovi.dajPodatke();
 
 class PitanjaDAO {
     constructor() {
@@ -68,12 +70,10 @@ class PitanjaDAO {
 
             pitanja[pitanjeId].odabiri = dobiveniOdabiri[pitanjeId];
 
-            //dekripcija
-            pitanja[pitanjeId].pitanje = kodovi.decrypt(pitanja[pitanjeId].pitanje, key1, iv1);
+            pitanja[pitanjeId].pitanje = kodovi.decrypt(pitanja[pitanjeId].pitanje, polje[0], polje[1]);
 
-            //dekripcija
             for (let odabir of pitanja[pitanjeId].odabiri) {
-                odabir.tekst = kodovi.decrypt(odabir.tekst, key2, iv2);
+                odabir.tekst = kodovi.decrypt(odabir.tekst, polje[2], polje[3]);
             }
         }
 
@@ -82,7 +82,7 @@ class PitanjaDAO {
     }
 
     postaviNovoPitanje = async function(pitanje, korime) {
-        let enkPitanje = kodovi.encrypt(pitanje.pitanje, key1, iv1);
+        let enkPitanje = kodovi.encrypt(pitanje.pitanje, polje[0], polje[1]);
         this.baza.spojiSeNaBazu();
         let zadnjiId = 0;
         try {
@@ -96,7 +96,7 @@ class PitanjaDAO {
 
             let potrebniUnosi = [];
             for (let odabir of pitanje.odabiri) {
-                let enkOdabir = kodovi.encrypt(odabir.tekst, key2, iv2);
+                let enkOdabir = kodovi.encrypt(odabir.tekst, polje[2], polje[3]);
                 sql = "INSERT INTO Odabir (tekst, Pitanje_idPitanje) VALUES (?, ?);";
                 potrebniUnosi.push(this.baza.izvrsiUpit(sql, [enkOdabir, zadnjiId]));
             }
