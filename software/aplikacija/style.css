@@ -242,7 +242,7 @@ input[type="radio"] {
 }
 
 .login-form,
-.registration-form {
+#registration-form {
     background-color: #ffffff;
     padding: 3.5rem;
     border-radius: 8px;
