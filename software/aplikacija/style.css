@@ -247,7 +247,8 @@ input[type="radio"] {
     padding: 3.5rem;
     border-radius: 8px;
     text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 25%;
 }
 
 .login-form h1 {
@@ -280,6 +281,12 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
+
+#greska {
+    display: none;
+    color: #cc0000; 
+}
+
 /************************ODJAVA****************************/
 
 #odjava{
