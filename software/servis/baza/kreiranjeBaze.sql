@@ -5,7 +5,6 @@ CREATE TABLE "Korisnik"(
   "lozinka" TEXT NOT NULL,
   "mail" VARCHAR(50),
   "aktivan" INTEGER DEFAULT 0,
-  "tajniKljuc" TEXT,
   CONSTRAINT "korime_UNIQUE"
     UNIQUE("korime"),
   CONSTRAINT "mail_UNIQUE"
@@ -52,6 +51,9 @@ COMMIT;
 
 ALTER TABLE Korisnik
 ADD COLUMN authToken TEXT;
+
+ALTER TABLE Korisnik
+ADD COLUMN tajniKljuc TEXT;
 
 
 
