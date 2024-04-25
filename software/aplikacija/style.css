@@ -344,3 +344,6 @@ p a:hover {
 .aktivacija-unutra a:hover{
     color: blue;
 }
+#textWrap{
+    overflow-wrap: break-word;
+}
