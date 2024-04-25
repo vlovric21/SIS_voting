@@ -36,12 +36,20 @@ exports.encrypt = function(tekst, kljuc, iv){
 	const cipher = crypto.createCipheriv(algorithm, kljuc, iv);
 	let encrypted = cipher.update(tekst, 'utf8', 'hex');
 	encrypted += cipher.final('hex');
+	return encrypted;
 }
 
 exports.decrypt = function(tekstEnk, kljuc, iv){
 	const algorithm = 'aes-256-cbc';
-	
+
 	const decipher = crypto.createDecipheriv(algorithm, kljuc, iv);
-	let decrypted = decipher.update(tekstEnk, 'hex', 'utf8');
-	decrypted += decipher.final('utf8');
+	try{
+		let decrypted = decipher.update(tekstEnk, 'hex', 'utf8');
+		decrypted += decipher.final('utf8');
+		return decrypted;
+	}catch(error){
+		console.error('Decryption error:', error.message);
+        return null;
+	}
+	
 }
