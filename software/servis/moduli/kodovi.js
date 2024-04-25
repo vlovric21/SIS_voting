@@ -29,3 +29,19 @@ _dajNasumicniBroj = function(min, max) {
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min) + min); 
   }
+
+exports.encrypt = function(tekst, kljuc, iv){
+	const algorithm = 'aes-256-cbc';
+
+	const cipher = crypto.createCipheriv(algorithm, kljuc, iv);
+	let encrypted = cipher.update(tekst, 'utf8', 'hex');
+	encrypted += cipher.final('hex');
+}
+
+exports.decrypt = function(tekstEnk, kljuc, iv){
+	const algorithm = 'aes-256-cbc';
+	
+	const decipher = crypto.createDecipheriv(algorithm, kljuc, iv);
+	let decrypted = decipher.update(tekstEnk, 'hex', 'utf8');
+	decrypted += decipher.final('utf8');
+}
