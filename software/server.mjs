@@ -3,7 +3,6 @@ import sesija from "express-session";
 import RestTest from "./servis/restTest.js";
 import RestPitanja from "./servis/restPitanja.js";
 import RestKorisnik from "./servis/restKorisnik.js";
-import Log from "./log/log.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
@@ -46,12 +45,6 @@ server.listen(port, () => {
 });
 
 function restService() {
-    let log = new Log();
-    server.use("/api", (req, res, next) => {
-        log.logRestServiceUse(req, res);
-        next();
-    });
-
     let restTest = new RestTest();
     server.get("/api/restTest", restTest.testApi);
 
