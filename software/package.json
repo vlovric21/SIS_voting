@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.mjs",
   "scripts": {
-    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken totp-generator base32-encoding crypto",
+    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken totp-generator base32-encoding crypto && npm install totp-generator@latest && npm install morgan",
     "start": "node server.mjs"
   },
   "author": "",
