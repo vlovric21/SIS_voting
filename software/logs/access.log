@@ -1,0 +1,4 @@
+POST method to '/api/korisnici/dmatijani/prijava' at Sat, 27 Apr 2024 21:56:19 GMT, got status 400 and content length 60 in response time 66.480ms, body: {"mail":"david.matijanic@gmail.com","lozinka":"c1r2e3p4","totp":"714417","korime":"dmatijani"}
+POST method to '/api/korisnici/dmatijani/prijava' at Sat, 27 Apr 2024 21:56:26 GMT, got status 201 and content length 22 in response time 33.546ms, body: {"mail":"david.matijanic@gmail.com","lozinka":"c1r2e3p4","totp":"599720","korime":"dmatijani"}
+GET method to '/api/korisnici/dmatijani/prijava' at Sat, 27 Apr 2024 21:56:31 GMT, got status 201 and content length 31 in response time 20.755ms
+PUT method to '/api/pitanja/30/7' at Sat, 27 Apr 2024 21:56:43 GMT, got status 401 and content length 27 in response time 21.179ms

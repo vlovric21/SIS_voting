@@ -1,10 +1,14 @@
 import express from "express";
+import morgan from "morgan";
+import fs from "fs";
 import sesija from "express-session";
 import RestTest from "./servis/restTest.js";
 import RestPitanja from "./servis/restPitanja.js";
 import RestKorisnik from "./servis/restKorisnik.js";
+import Logging from "./logs/logging.js";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import path from "path";
 import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
 
 const port = 5000;
@@ -20,9 +24,15 @@ const sesijaKljuc = "hgjupOIUjkhHJJghgdfGdfgewsdqwDRFhzTr54433466747RTHfdggerDr"
 const jwtTajniKljuc = "dfg1334550879rEdfgDFgGETerTGFgDFre4t5dfGe4656457TRghWE34257689JNFH";
 const jwtValjanost = 16;
 
+let logPutanja = path.join(putanja, "/logs/access.log");
+var logStream = fs.createWriteStream(logPutanja, { flags: 'a' })
+
+let logging = new Logging();
+
 const server = express();
 server.use(express.urlencoded({extended: true}));
 server.use(express.json());
+server.use(morgan(logging.logRow, { stream: logStream }));
 server.use(sesija({
     secret: sesijaKljuc,
     saveUninitialized: true,
