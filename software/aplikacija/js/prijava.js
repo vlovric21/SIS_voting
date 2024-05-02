@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         if(resSignIn.status == 201){
             location.href = "/pocetna";
         }else if(resSignIn.status == 417){
-            let responseText = (await resSignIn.text()).replace(/["{}]/g, " ");
+            let responseText = (await resSignIn.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
             greska.style.display = "block";
             greska.innerHTML = `<p>${responseText}</p>`;
         }else if(resSignIn.status == 400){
-            let responseText = (await resSignIn.text()).replace(/["{}]/g, " ");
+            let responseText = (await resSignIn.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
             greska.style.display = "block";
             greska.innerHTML = `<p>${responseText}</p>`;
         }
