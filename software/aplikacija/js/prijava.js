@@ -31,7 +31,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             greska.style.display = "block";
             greska.innerHTML = `<p>${responseText}</p>`;
         }else if(resSignIn.status == 400){
-            console.log("Korisnik je već prijavljen!");
+            let responseText = (await resSignIn.text()).replace(/["{}]/g, " ");
+            greska.style.display = "block";
+            greska.innerHTML = `<p>${responseText}</p>`;
         }
     })
 });
