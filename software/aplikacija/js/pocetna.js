@@ -43,27 +43,36 @@ async function dajJWT(){
 
 async function prikaziPitanja(pitanja){
     let listaPitanja = document.getElementById("lista-pitanja");
-	let lista = '<div id="pitanje" class="kartica-pitanja">';
-    for (p of pitanja){
+    let counter = 1;
+    let lista = "";
+    for (let p of pitanja){
+        lista += '<div id="pitanje" class="kartica-pitanja">';
         lista += `<div class="autor">Autor: ${p.autor}</div>`;
         lista += `<h2 class="naslov-pitanja">${p.pitanje}</h2>`
-        lista += `<form id="pitanje1" action="#">
-                    <div id="odgovori1" class="odgovori">
-                    ${prikaziOdgovore(p)}
+        lista += `<form id="pitanje${counter}" action="#">
+                    <div id="odgovori${counter}" class="odgovori">
                     </div>
                     <button type="button">Dalje</button>
-                </form>`;
+                </form>
+            </div>`;
+            counter ++;
     }
 
 	listaPitanja.innerHTML = lista;
+
+    for (let i = 0; i < pitanja.length; i++) {
+        await prikaziOdgovore(pitanja[i], i + 1);
+    }
 }
 
-async function prikaziOdgovore(pitanje){
-    let odgovori = document.getElementById("odgovori1");
+async function prikaziOdgovore(pitanje, counter){
+    let odabiri = document.getElementById(`odgovori${counter}`);
+    let ctrOdg = 1;
     let listaOdg = "";
-    for (o of pitanje){
-        listaOdg += `<input type="radio" id="odgovor1" name="odgovor" value="odgovor1">
-        <label for="odgovor1">Odgovor 1</label><br>`;
+    for (let o of pitanje.odabiri){
+        listaOdg += `<input type="radio" id="odgovor${ctrOdg}" name="odgovor" value="odgovor${ctrOdg}">
+        <label for="odgovor${ctrOdg}">${o.tekst}</label><br>`;
+        ctrOdg ++;
     }
-    odgovori.innerHTML = listaOdg;
+    odabiri.innerHTML = listaOdg;
 }
