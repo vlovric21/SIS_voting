@@ -1,10 +1,9 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    dohvatiPitanja(1);
-    
+    await dohvatiPitanja(1);
 });
 
 async function dohvatiPitanja(str){
-    let token = await  dajJWT();
+    let token = await dajJWT();
 
     if(token != null){
         let zaglavlje = new Headers();
@@ -24,7 +23,9 @@ async function dohvatiPitanja(str){
             let podaci = await odgovor.text();
             podaci = JSON.parse(podaci);
 
-            prikaziPitanja(podaci);
+            await prikaziPitanja(podaci);
+
+           
         }
     }
 }
@@ -34,7 +35,6 @@ async function dajJWT(){
     if (odgovor.status != 201) {
         return {};
     }
-
     let token = odgovor.headers.get("authorization").split(" ")[1];
     if (token == "" || token == null || token == undefined) {
         return 0;
@@ -43,36 +43,78 @@ async function dajJWT(){
 
 async function prikaziPitanja(pitanja){
     let listaPitanja = document.getElementById("lista-pitanja");
-    let counter = 1;
     let lista = "";
     for (let p of pitanja){
         lista += '<div id="pitanje" class="kartica-pitanja">';
         lista += `<div class="autor">Autor: ${p.autor}</div>`;
         lista += `<h2 class="naslov-pitanja">${p.pitanje}</h2>`
-        lista += `<form id="pitanje${counter}" action="#">
-                    <div id="odgovori${counter}" class="odgovori">
+        lista += `<form id="${p.idPitanje}" action="#">
+                    <div id="odgovori${p.idPitanje}" class="odgovori">
                     </div>
-                    <button type="button">Dalje</button>
+                    <button type="submit">Pošalji</button>
                 </form>
             </div>`;
-            counter ++;
     }
 
 	listaPitanja.innerHTML = lista;
 
-    for (let i = 0; i < pitanja.length; i++) {
-        await prikaziOdgovore(pitanja[i], i + 1);
-    }
+    pitanja.forEach(async pitanje => {
+        await prikaziOdgovore(pitanje);
+    });
+
+    await postaviSlusace();
 }
 
-async function prikaziOdgovore(pitanje, counter){
-    let odabiri = document.getElementById(`odgovori${counter}`);
-    let ctrOdg = 1;
+async function prikaziOdgovore(pitanje){
+    let odabiri = document.getElementById(`odgovori${pitanje.idPitanje}`);
     let listaOdg = "";
     for (let o of pitanje.odabiri){
-        listaOdg += `<input type="radio" id="odgovor${ctrOdg}" name="odgovor" value="odgovor${ctrOdg}">
-        <label for="odgovor${ctrOdg}">${o.tekst}</label><br>`;
-        ctrOdg ++;
+        listaOdg += `<input type="radio" id="${o.idOdabir}" name="odgovor" value="odgovor${o.idOdabir}"><label for="${o.idOdabir}">${o.tekst}</label><br>`;
     }
     odabiri.innerHTML = listaOdg;
+}
+
+async function postaviSlusace(){
+    let forme = document.querySelectorAll("form");
+
+    forme.forEach(form => {
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            let trenutnaForma = event.target;
+            let odgovori = trenutnaForma.querySelectorAll('input[type="radio"]');
+            let odabraniOdg = null;
+            odgovori.forEach(element => {
+                if(element.checked)
+                    odabraniOdg = element;
+            });
+            await posaljiOdgvor(trenutnaForma.id, odabraniOdg.id);
+        });
+        
+    });
+}
+
+async function posaljiOdgvor(pitanjeId, odgovorId){
+    let token = await  dajJWT();
+
+    if(token != null){
+        let zaglavlje = new Headers();
+        zaglavlje.set("Content-Type", "application/json");
+        zaglavlje.set("Authorization", `Bearer ${token}`);
+        let parametri = {
+            method: "PUT",
+            headers: zaglavlje
+        }
+        console.log(`/api/pitanja/${pitanjeId}/${odgovorId}`);
+        let odgovor = await fetch(
+            `/api/pitanja/${pitanjeId}/${odgovorId}`,
+            parametri
+        );
+
+        if (odgovor.status == 201) {
+            console.log("Uspjesno slanje!");
+        }else{
+            console.log("Nije dobro mraleeee");
+        }
+    }
 }
