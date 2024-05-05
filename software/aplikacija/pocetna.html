@@ -14,26 +14,28 @@
         <h1>SISVoting: Vaš glas, Bez Kompromisa</h1>
         <p>Naša aplikacija za sigurno glasanje pruža intuitivno sučelje za sigurno i pouzdano sudjelovanje u izbornim procesima. Uz napredne sigurnosne značajke i jednostavnu navigaciju, omogućujemo građanima da svoje glasove daju s povjerenjem i bez problema.</p>
     </div>
-    
-    <div class="kartica-pitanja">
-        <div class="autor">Autor: John Doe</div>
-        <h2 class="naslov-pitanja">Ovo je naslov pitanja</h2>
-        <form action="#">
-            <div class="odgovori">
-                <input type="radio" id="odgovor1" name="odgovor" value="odgovor1">
-                <label for="odgovor1">Odgovor 1</label><br>
-                <input type="radio" id="odgovor2" name="odgovor" value="odgovor2">
-                <label for="odgovor2">Odgovor 2</label><br>
-                <input type="radio" id="odgovor3" name="odgovor" value="odgovor3">
-                <label for="odgovor3">Odgovor 3</label><br>
-            </div>
-            <button type="button">Dalje</button>
-        </form>
-    </div>
+    <main id="lista-pitanja">
+        <div id="pitanje" class="kartica-pitanja">
+            <div class="autor">Autor: John Doe</div>
+            <h2 class="naslov-pitanja">Ovo je naslov pitanja</h2>
+                <form action="#">
+                    <div class="odgovori">
+                        <input type="radio" id="odgovor1" name="odgovor" value="odgovor1">
+                        <label for="odgovor1">Odgovor 1</label><br>
+                        <input type="radio" id="odgovor2" name="odgovor" value="odgovor2">
+                        <label for="odgovor2">Odgovor 2</label><br>
+                        <input type="radio" id="odgovor3" name="odgovor" value="odgovor3">
+                        <label for="odgovor3">Odgovor 3</label><br>
+                    </div>
+                    <button type="button">Dalje</button>
+                </form>
+        </div>
+    </main>
     
     <div class="new-poll-button">
         <a href="/novo-pitanje">Nova anketa</a><i class="fa-light fa-plus"></i>
     </div>
     #podnozje#
+    <script src="/js/pocetna.js"></script>
 </body>
 </html>
