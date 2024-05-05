@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             body: JSON.stringify(body)
         });
         if(resSignIn.status == 201){
+            sessionStorage.setItem('username', username.value);
             location.href = "/pocetna";
         }else if(resSignIn.status == 417){
             let responseText = (await resSignIn.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");

@@ -33,6 +33,16 @@ server.use(sesija({
 server.use("/css", express.static("./aplikacija/style.css"));
 server.use("/js", express.static("./aplikacija/js"));
 
+restPrijavaRegistracija();
+
+server.all("*", (zahtjev, odgovor, nastavi) => {
+    if(zahtjev.session.korime == null){
+        odgovor.redirect("/prijava");
+    }else{
+        nastavi();
+    }
+});
+
 restService();
 app();
 
@@ -47,17 +57,25 @@ server.listen(port, () => {
 function restService() {
     let restTest = new RestTest();
     server.get("/api/restTest", restTest.testApi);
+    
+    let restPitanja = new RestPitanja(sol, brojPoStr, jwtTajniKljuc, jwtValjanost);
+    server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));
+    server.post("/api/pitanja", restPitanja.postPitanja.bind(restPitanja));
+    server.put("/api/pitanja/:pitanjeId/:odgovorId", restPitanja.putPitanja.bind(restPitanja));
+}
+function restPrijavaRegistracija(){
+    let restTest = new RestTest();
+    let htmlUpravitelj = new HtmlUpravitelj(putanja + "/aplikacija");
+    server.get("/api/restTest", restTest.testApi);
 
     let restKorisnik = new RestKorisnik(sol, putanja + "/aplikacija", url, jwtTajniKljuc, jwtValjanost);
     server.post("/api/korisnici", restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
     server.get("/api/korisnici/aktiviraj/:korime", restKorisnik.aktivirajKorisnika.bind(restKorisnik));
     server.get("/api/korisnici/:korime/prijava", restKorisnik.dobijJWT.bind(restKorisnik));
     server.post("/api/korisnici/:korime/prijava", restKorisnik.kreirajSesiju.bind(restKorisnik));
-    
-    let restPitanja = new RestPitanja(sol, brojPoStr, jwtTajniKljuc, jwtValjanost);
-    server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));
-    server.post("/api/pitanja", restPitanja.postPitanja.bind(restPitanja));
-    server.put("/api/pitanja/:pitanjeId/:odgovorId", restPitanja.putPitanja.bind(restPitanja));
+
+    server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));
+    server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj)); 
 }
 
 function app() {
@@ -65,8 +83,6 @@ function app() {
 
     server.get("/pocetna", htmlUpravitelj.pocetnaStranica.bind(htmlUpravitelj));
     server.get("/novo-pitanje", htmlUpravitelj.novoPitanje.bind(htmlUpravitelj));
-    server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));    //ovo maknuti i staviti putanje za prijavu ne samo posluživanje
-    server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj));    //ovo maknuti i staviti putanje za prijavu ne samo posluživanje
     server.get("/odjava", (zahtjev, odgovor) => {
         if (zahtjev.session) {
             zahtjev.session.destroy((greska) => {});
