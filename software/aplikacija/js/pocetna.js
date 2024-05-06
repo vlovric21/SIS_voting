@@ -53,6 +53,7 @@ async function prikaziPitanja(pitanja){
                     </div>
                     <button type="submit">Pošalji</button>
                 </form>
+                <h4>Ukupan broj odgovora: ${p.ukupnoOdgovora}</h4>
             </div>`;
     }
 
@@ -69,9 +70,20 @@ async function prikaziOdgovore(pitanje){
     let odabiri = document.getElementById(`odgovori${pitanje.idPitanje}`);
     let listaOdg = "";
     for (let o of pitanje.odabiri){
-        listaOdg += `<input type="radio" id="${o.idOdabir}" name="odgovor" value="odgovor${o.idOdabir}"><label for="${o.idOdabir}">${o.tekst}</label><br>`;
+        listaOdg += `<input type="radio" id="${o.idOdabir}" name="odgovor" value="odgovor${o.idOdabir}">`;
+        listaOdg += `<label for="${o.idOdabir}">${o.tekst}</label>`;
+        listaOdg += `<div class="progress-bar-container">
+                        <div class="progress-bar" style="width: ${calculateProgressBarWidth(o.brojOdgovora, pitanje.ukupnoOdgovora)};"></div>
+                        <label class="statistikaOdgovora" for="${o.idOdabir}">${o.brojOdgovora} odgovora</label>
+                    </div><br>`;
     }
     odabiri.innerHTML = listaOdg;
+}
+
+function calculateProgressBarWidth(numResponses, totalResponses) {
+    let maxWidth = 50;
+    let width = (numResponses / totalResponses) * maxWidth;
+    return `${width}%`;
 }
 
 async function postaviSlusace(){
