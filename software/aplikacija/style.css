@@ -7,6 +7,9 @@ body{
 p{
     font-size: 20px;
 }
+main{
+    margin-bottom: 5rem;
+}
 /*******************************PODNIŽJE**********************************/
 footer {
     background-color: #f78432; 
@@ -102,12 +105,13 @@ header {
 }
 
 .kartica-pitanja {
+    width: 70%;
+    margin: 10px auto;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
 }
 
 .autor {
@@ -132,7 +136,7 @@ header {
 .progress-bar-container {
     display: flex;
     margin-left: 1rem;
-    width: 50%;
+    width: 80%;
     height: 20px; 
     background-color: #f0f0f0; 
     border-radius: 5px; 

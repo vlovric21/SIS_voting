@@ -81,7 +81,7 @@ async function prikaziOdgovore(pitanje){
 }
 
 function calculateProgressBarWidth(numResponses, totalResponses) {
-    let maxWidth = 50;
+    let maxWidth = 80;
     let width = (numResponses / totalResponses) * maxWidth;
     return `${width}%`;
 }
@@ -117,16 +117,18 @@ async function posaljiOdgvor(pitanjeId, odgovorId){
             method: "PUT",
             headers: zaglavlje
         }
-        console.log(`/api/pitanja/${pitanjeId}/${odgovorId}`);
         let odgovor = await fetch(
             `/api/pitanja/${pitanjeId}/${odgovorId}`,
             parametri
         );
 
         if (odgovor.status == 201) {
-            console.log("Uspjesno slanje!");
+            location.reload();
+            let responseText = (await odgovor.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
+            console.log(responseText);
         }else{
-            console.log("Nije dobro mraleeee");
+            let responseText = (await odgovor.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
+            console.log(responseText);
         }
     }
 }
