@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     form.addEventListener("submit", async (event) =>{
         event.preventDefault();
-
         await posaljiNovoPitanje();
     });
 });
@@ -25,12 +24,12 @@ async function dajJWT(){
 async function posaljiNovoPitanje(){
     let token = await dajJWT();
     let naslovPitanja = document.getElementById("pitanje-input");
+    let odabiri = await generirajOdgovoreZaSlanje();
 
-    let tijelo ={
+    let tijelo = {
         pitanje: naslovPitanja.value,
-        odabiri: await generirajOdgovoreZaSlanje()
+        odabiri: odabiri
     }
-    console.log(tijelo);
 
     if(token != null){
         let zaglavlje = new Headers();
@@ -48,9 +47,9 @@ async function posaljiNovoPitanje(){
         );
 
         if (odgovor.status == 201) {
-            location.href = "/pocetna";
             let responseText = (await odgovor.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
             console.log(responseText);
+            location.href = "/pocetna";
         }else{
             let responseText = (await odgovor.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
             console.log(responseText);
@@ -63,15 +62,15 @@ async function generirajOdgovoreZaSlanje(){
     let poljeOdabira = [];
 
     try {
-        await Array.from(opcije).forEach(async (opcija) => {
+        for (const opcija of opcije) {
             let jedanOdabir = {
                 tekst: opcija.children[0].value
             };
             poljeOdabira.push(jedanOdabir);
-        });
+        }
         return poljeOdabira;
     } catch (error) {
-        console.error('Error in generirajOdgovoreZaSlanje:', error);
+        console.error('generirajOdgovoreZaSlanje:', error);
         return []; 
     }
 }
