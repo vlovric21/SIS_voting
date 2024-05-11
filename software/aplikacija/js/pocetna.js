@@ -110,7 +110,7 @@ async function postaviSlusace(){
 }
 
 async function posaljiOdgvor(pitanjeId, odgovorId, recToken){
-    let token = await  dajJWT();
+    let token = await dajJWT();
 
     if(token != null){
         let zaglavlje = new Headers();
