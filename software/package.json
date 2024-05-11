@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.mjs",
   "scripts": {
-    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken nodemailer totp-generator base32-encoding crypto",
+    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken totp-generator base32-encoding crypto && npm install totp-generator@latest && npm install morgan",
     "start": "node server.mjs"
   },
   "author": "",
@@ -15,7 +15,7 @@
     "express": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/express",
     "express-session": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/express-session",
     "jsonwebtoken": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/jsonwebtoken",
-    "nodemailer": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/nodemailer",
+    "nodemailer": "^6.9.7",
     "sqlite3": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/sqlite3",
     "totp-generator": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/totp-generator"
   }
