@@ -3,6 +3,7 @@ const HtmlUpravitelj = require("../aplikacija/htmlUpravitelj.js");
 const kodovi = require("./moduli/kodovi.js");
 const mail = require("./moduli/mail.js");
 const jwt = require("./moduli/jwt.js");
+const rec = require("./moduli/recaptcha.js");
 
 class RestKorisnik {
     constructor (sol, putanja, url, jwtTajniKljuc, jwtValjanost) {
@@ -14,6 +15,20 @@ class RestKorisnik {
     }
 
     registrirajNovogKorisnika = async function (req, res) {
+        let token = req.body.token;
+        if (token == undefined || token == "") {
+            res.type("application/json");
+            res.status(417);
+            res.send(JSON.stringify({"greska": "nedostaje token"}));
+            return;
+        }
+        if(!await rec.provjeriRecaptchu(token)){
+            res.type("application/json");
+            res.status(417);
+            res.send(JSON.stringify({"greska": "Nije covjek"}));
+            return;
+        }
+
         res.type("application/json");
         
         let noviKorisnik = req.body;
