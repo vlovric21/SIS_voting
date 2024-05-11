@@ -71,8 +71,8 @@ function restService() {
     
     let restPitanja = new RestPitanja(sol, brojPoStr, jwtTajniKljuc, jwtValjanost);
     server.get("/api/pitanja", restPitanja.getPitanja.bind(restPitanja));
-    server.post("/api/pitanja", restPitanja.postPitanja.bind(restPitanja));
-    server.put("/api/pitanja/:pitanjeId/:odgovorId", restPitanja.putPitanja.bind(restPitanja));
+    server.post("/api/pitanja", rec.validirajRecaptchu, restPitanja.postPitanja.bind(restPitanja));
+    server.put("/api/pitanja/:pitanjeId/:odgovorId", rec.validirajRecaptchu, restPitanja.putPitanja.bind(restPitanja));
 }
 function restPrijavaRegistracija(){
     let restTest = new RestTest();
@@ -83,7 +83,7 @@ function restPrijavaRegistracija(){
     server.post("/api/korisnici", rec.validirajRecaptchu, restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
     server.get("/api/korisnici/aktiviraj/:korime", restKorisnik.aktivirajKorisnika.bind(restKorisnik));
     server.get("/api/korisnici/:korime/prijava", restKorisnik.dobijJWT.bind(restKorisnik));
-    server.post("/api/korisnici/:korime/prijava", restKorisnik.kreirajSesiju.bind(restKorisnik));
+    server.post("/api/korisnici/:korime/prijava", rec.validirajRecaptchu, restKorisnik.kreirajSesiju.bind(restKorisnik));
 
     server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));
     server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj)); 

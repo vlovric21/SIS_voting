@@ -19,13 +19,13 @@ exports.validirajRecaptchu = async function(req, res, next){
     if(token == undefined || token == ""){
         res.type("application/json");
         res.status(417);
-        res.send(JSON.stringify({"greska": "nedostaje token"}));
+        res.send(JSON.stringify({"greska": "nedostaje recaptcha token"}));
         return;
     }
     if(!await provjeriRecaptchu(token)){
         res.type("application/json");
         res.status(417);
-        res.send(JSON.stringify({"greska": "Nije covjek"}));
+        res.send(JSON.stringify({"greska": "Nisi čovjek, što si..."}));
         return;
     }
     next();
