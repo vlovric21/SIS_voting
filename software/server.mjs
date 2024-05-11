@@ -98,6 +98,5 @@ function app() {
             zahtjev.session.destroy((greska) => {});
         }
         htmlUpravitelj.odjava(zahtjev, odgovor);
-        odgovor.redirect("/prijava");
     });
 }
