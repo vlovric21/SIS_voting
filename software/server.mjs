@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import path from "path";
 import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
+import rec from "./servis/moduli/recaptcha.js";
 
 const port = 5000;
 const url = `http://localhost:${port}`;
@@ -79,7 +80,7 @@ function restPrijavaRegistracija(){
     server.get("/api/restTest", restTest.testApi);
 
     let restKorisnik = new RestKorisnik(sol, putanja + "/aplikacija", url, jwtTajniKljuc, jwtValjanost);
-    server.post("/api/korisnici", restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
+    server.post("/api/korisnici", rec.validirajRecaptchu, restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
     server.get("/api/korisnici/aktiviraj/:korime", restKorisnik.aktivirajKorisnika.bind(restKorisnik));
     server.get("/api/korisnici/:korime/prijava", restKorisnik.dobijJWT.bind(restKorisnik));
     server.post("/api/korisnici/:korime/prijava", restKorisnik.kreirajSesiju.bind(restKorisnik));

@@ -1,6 +1,6 @@
 const tajni = "6Ldl7NgpAAAAAOhjURtuBN62NhLErUUznOyzkWYk";
 
-exports.provjeriRecaptchu = async function(token){
+async function provjeriRecaptchu(token){
     let parametri = {method: 'POST'};
     let o = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${tajni}&response=${token}`, parametri);
     let status = JSON.parse(await o.text());
@@ -10,4 +10,23 @@ exports.provjeriRecaptchu = async function(token){
     }else{
         return false;
     }
+}
+
+exports.provjeriRecaptchu = provjeriRecaptchu;
+
+exports.validirajRecaptchu = async function(req, res, next){
+    let token = req.body.token;
+    if(token == undefined || token == ""){
+        res.type("application/json");
+        res.status(417);
+        res.send(JSON.stringify({"greska": "nedostaje token"}));
+        return;
+    }
+    if(!await provjeriRecaptchu(token)){
+        res.type("application/json");
+        res.status(417);
+        res.send(JSON.stringify({"greska": "Nije covjek"}));
+        return;
+    }
+    next();
 }
