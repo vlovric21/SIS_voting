@@ -2,7 +2,7 @@
 
 <html lang="hr">
 <head>
-    <title>Prijava</title>
+    <title>Registracija</title>
     <meta charset="utf-8">
     <meta name="autor" content="David Matijanić, Viktor Lovrić, Magdalena Markovinović">
     <link rel="stylesheet" type="text/css" href="/css">
@@ -12,21 +12,22 @@
         <div class="logo">SIS-Voting</div>
     </header>
     <div class="container-registration">
-        <form class="registration-form">
+        <form id="registration-form">
             <h1>Registracija</h1>
             <div class="input-container">
-                <input type="text" placeholder="Email" required>
+                <input id="username" type="text" placeholder="Username" required>
             </div>
             <div class="input-container">
-                <input type="text" placeholder="Username" required>
+                <input id="email" type="text" placeholder="Email" required>
             </div>
             <div class="input-container">
-                <input type="password" placeholder="Lozinka" required>
+                <input id="password" type="password" placeholder="Lozinka" required>
             </div>
             <div class="input-container">
-                <input type="password" placeholder="Ponovi lozinku" required>
+                <input type="password" id="retryPasword" placeholder="Ponovi lozinku" required>
             </div>
-            <button type="submit">Registriraj se</button>
+            <p id="greska"></p>
+            <button id="submitButton" type="submit">Registriraj se</button>
             <p>Već imate račun? <a href="/prijava">Prijavite se</a></p>
         </form>
     </div>
@@ -36,5 +37,6 @@
         Magdalena Markovinović
         2024.
     </footer>
+    <script src="/js/registracija.js"></script>
 </body>
 </html>

@@ -14,16 +14,10 @@
         <h1>Novo pitanje</h1>
     </div>
     <div class="container">
-        <form action="#" method="POST" class="form">
-            <h2>Postavite pitanje:</h2>
+        <form id="formaNovoPitanje" action="#" method="POST" class="form">
+            <h2 id="naslovPitanja">Postavite pitanje:</h2>
             <input id="pitanje-input" type="text">
-            
-            <div id="gumbi">
-                <button type="button" class="vrsta-odgovora" id="jednostruki-gumb">Jednostruki odgovor</button>
-                <button type="button" class="vrsta-odgovora" id="visestruki-gumb">Višestruki  odgovor</button>
-            </div>
             <div id="odgovori"></div>
-            
 
             <input type="submit" value="Pošalji">
         </form>
