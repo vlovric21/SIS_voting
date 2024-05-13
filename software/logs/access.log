@@ -601,3 +601,18 @@ GET method to '/css' at Mon, 13 May 2024 07:44:05 GMT, got status 304 and conten
 GET method to '/js/prijava.js' at Mon, 13 May 2024 07:44:05 GMT, got status 304 and content length undefined in response time 2.211ms
 GET method to '/favicon.ico' at Mon, 13 May 2024 07:44:06 GMT, got status 302 and content length 30 in response time 5.618ms
 GET method to '/prijava' at Mon, 13 May 2024 07:44:06 GMT, got status 304 and content length undefined in response time 3.543ms
+GET method to '/' at Mon, 13 May 2024 09:15:51 GMT, got status 302 and content length 60 in response time 4.428ms
+GET method to '/prijava' at Mon, 13 May 2024 09:15:51 GMT, got status 304 and content length undefined in response time 2.259ms
+GET method to '/css' at Mon, 13 May 2024 09:15:51 GMT, got status 304 and content length undefined in response time 2.277ms
+GET method to '/js/prijava.js' at Mon, 13 May 2024 09:15:51 GMT, got status 200 and content length 2653 in response time 1.647ms
+GET method to '/favicon.ico' at Mon, 13 May 2024 09:15:51 GMT, got status 302 and content length 30 in response time 0.733ms
+GET method to '/prijava' at Mon, 13 May 2024 09:15:51 GMT, got status 304 and content length undefined in response time 1.101ms
+POST method to '/api/gsi' at Mon, 13 May 2024 09:15:55 GMT, got status 302 and content length 30 in response time 0.661ms, body: {"token":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImEzYjc2MmY4NzFjZGIzYmFlMDA0NGM2NDk2MjJmYzEzOTZlZGEzZTMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0Mzg2ODMxNTE1MzMtcTdzdDVwZGdjam5kNzU2Y3JmNWJnc3NmaWVwMThjanAuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI0Mzg2ODMxNTE1MzMtcTdzdDVwZGdjam5kNzU2Y3JmNWJnc3NmaWVwMThjanAuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDc1MDY3NTg4MDgwNDMxODc1NTgiLCJoZCI6InN0dWRlbnQuZm9pLmhyIiwiZW1haWwiOiJ2bG92cmljMjFAc3R1ZGVudC5mb2kuaHIiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNzE1NTkxNDU2LCJuYW1lIjoiVmlrdG9yIExvdnJpxIciLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jTERDRFpSaEtjVjRXOF9yWEsxNGFJYzZYZWwzS2FfbmlaLVZSSTZ0YlhvZ3NlcDdnPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IlZpa3RvciIsImZhbWlseV9uYW1lIjoiTG92cmnEhyIsImlhdCI6MTcxNTU5MTc1NiwiZXhwIjoxNzE1NTk1MzU2LCJqdGkiOiJlNmU4ODA5YmIxMDY4NTFlYWJjZTVkNGZhNjgwZTE1OGM0NDliZGYyIn0.H4VrNgsY3HpDhIdtcQCFv6CkZm18-0GfYZRnYNOShlW-0k5HPct-2N8VI7bKgynfhAuqZg7SpFA-z7zN2Sy0YTsWSBE5wfMnZtaRSpzI7vtMddZt8pQWOZLFRlvT6VwjtJhNTPwIwLAoqhHe-OcBeg24jqKOlr0LsXSkSiigPNY16bLl9ozthcYhCQM7y5mzU0NwocAN3hT_sG2rTGynOCXcuaDXxCMs9JnG5-7b3NC8fnd9TDLs4ykBkttxgpsRMQXLNZ-LDsSkdwKG44ufqPbWp6CvsPhhDjy5qAxSTyBgMhxKu-2211zgWEJJVTTXW4nn5CglU5YIqPzWj5wqNQ"}
+GET method to '/prijava' at Mon, 13 May 2024 09:15:55 GMT, got status 304 and content length undefined in response time 0.975ms
+GET method to '/css' at Mon, 13 May 2024 09:15:58 GMT, got status 304 and content length undefined in response time 1.067ms
+GET method to '/' at Mon, 13 May 2024 09:17:43 GMT, got status 302 and content length 60 in response time 3.896ms
+GET method to '/prijava' at Mon, 13 May 2024 09:17:43 GMT, got status 304 and content length undefined in response time 2.356ms
+GET method to '/css' at Mon, 13 May 2024 09:17:43 GMT, got status 304 and content length undefined in response time 1.775ms
+GET method to '/js/prijava.js' at Mon, 13 May 2024 09:17:43 GMT, got status 304 and content length undefined in response time 0.972ms
+GET method to '/favicon.ico' at Mon, 13 May 2024 09:17:43 GMT, got status 302 and content length 30 in response time 0.877ms
+GET method to '/prijava' at Mon, 13 May 2024 09:17:43 GMT, got status 304 and content length undefined in response time 1.540ms

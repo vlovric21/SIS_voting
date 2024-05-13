@@ -14,22 +14,15 @@ exports.verifyOpenIDToken = async function(req, res, next) {
         const userid = payload['sub'];
 
         // Add the user's information to the request object
+        console.log(payload);
         req.user = {
+            korime: payload.given_name + payload.family_name[0],
             id: userid,
             email: payload.email,
-            name: payload.name,
-            // Add other necessary information
         };
 
         next(); // Proceed to the next middleware function or route handler
     } catch (error) {
-        // Handle the error (e.g., send a response with an error status code)
         res.status(401).send('Invalid token');
     }
 }
-
-// Use the middleware function in your routes
-app.post('/api/register', verifyOpenIDToken, (req, res) => {
-    // Registration logic here
-    // You can access the user's information with `req.user`
-});

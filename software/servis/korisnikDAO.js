@@ -8,6 +8,19 @@ class KorisnikDAO {
         this.baza = new Baza("baza.sqlite");
     }
 
+    registrirajOpenIDKorisnika = async function(korisnik){
+        this.baza.spojiSeNaBazu();
+        let sqlMail = "SELECT * FROM Korisnik WHERE mail = ?;";
+        if((await this.baza.izvrsiUpit(sqlMail, [korisnik.email])).length > 0){
+            this.baza.zatvoriVezu();
+            throw new Error("Već imate račun s ovom mail adresom");
+        }
+        let sql = "INSERT INTO Korisnik (korime, lozinka, mail) VALUES (?, ?, ?);";
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, korisnik.id, korisnik.email]);
+        this.baza.zatvoriVezu();
+        return korisnik.korime;
+    }
+
     registrirajNovogKorisnika = async function(korisnik, authToken) {
         this.baza.spojiSeNaBazu();
         let sqlKorime = "SELECT * FROM Korisnik WHERE korime = ?;";

@@ -11,6 +11,7 @@ import { dirname } from "path";
 import path from "path";
 import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
 import rec from "./servis/moduli/recaptcha.js";
+import gsi from "./servis/moduli/gsi.js";
 
 const port = 5000;
 const url = `http://localhost:${port}`;
@@ -88,7 +89,7 @@ function restPrijavaRegistracija(){
     server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));
     server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj)); 
 
-    //server.post("/api/gsi", gsi.nesto, restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
+    server.post("/api/gsi", gsi.verifyOpenIDToken);
 }
 
 function app() {

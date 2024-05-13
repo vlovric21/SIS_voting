@@ -14,6 +14,20 @@ class RestKorisnik {
         this.jwtValjanost = jwtValjanost;
     }
 
+    registrirajOpenIDKorisnika = async function (req, res) {
+        res.type("application/json");
+        let noviKorisnik = req.body;
+
+        let korisnikDAO = new KorisnikDAO();
+        korisnikDAO.registrirajOpenIDKorisnika(noviKorisnik).then((korime) => {
+            res.status(200);
+            res.send(JSON.stringify({"korime": korime}));
+            }).catch((greska) => {
+                res.status(400);
+                res.send(JSON.stringify({"greska": greska.message}));
+            });
+        }
+
     registrirajNovogKorisnika = async function (req, res) {
         res.type("application/json");
         
