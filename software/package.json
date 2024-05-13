@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.mjs",
   "scripts": {
-    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken totp-generator base32-encoding crypto && npm install totp-generator@latest && npm install morgan",
+    "pripremi": "npm link --save express sqlite3 express-session jsonwebtoken totp-generator base32-encoding crypto && npm install totp-generator@latest && npm install morgan && npm install google-auth-library",
     "start": "node server.mjs"
   },
   "author": "",
@@ -14,6 +14,7 @@
     "crypto": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/crypto",
     "express": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/express",
     "express-session": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/express-session",
+    "google-auth-library": "^9.9.0",
     "jsonwebtoken": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/jsonwebtoken",
     "nodemailer": "^6.9.7",
     "sqlite3": "file:../../../.nvm/versions/node/v20.12.2/lib/node_modules/sqlite3",

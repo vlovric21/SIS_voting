@@ -87,6 +87,8 @@ function restPrijavaRegistracija(){
 
     server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));
     server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj)); 
+
+    //server.post("/api/gsi", gsi.nesto, restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
 }
 
 function app() {

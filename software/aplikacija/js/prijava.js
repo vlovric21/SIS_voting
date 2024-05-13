@@ -1,9 +1,38 @@
+async function handleCredentialResponse(response){
+    let greska = document.getElementById("greska");
+
+    let token = response.credential;
+    console.log(token);
+
+    let body = {
+        token: token
+    }
+
+    let headers = new Headers();
+    headers.set("Content-Type", "application/json");
+
+    let res = await fetch("/api/gsi", {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body)
+    });
+    
+    if(res.status == 200){
+        //skuzit kak stavit username u session storage
+    }else{
+        let responseText = (await res.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
+        greska.style.display = "block";
+        greska.innerHTML = `<p>${responseText}</p>`;
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     let form = document.getElementById("loginForm");
     let password = document.getElementById("lozinka");
     let username = document.getElementById("korime");
     let totp = document.getElementById("totp");
     let greska = document.getElementById("greska");
+
 
     form.addEventListener("submit", async (event)=> {
         event.preventDefault();
