@@ -5,36 +5,40 @@ document.addEventListener("DOMContentLoaded", async () => {
     let totp = document.getElementById("totp");
     let greska = document.getElementById("greska");
 
-
     form.addEventListener("submit", async (event)=> {
         event.preventDefault();
-        console.log(username.value);
+        grecaptcha.ready(function(){
+            grecaptcha.execute('6Ldl7NgpAAAAAILzx0tyDFwCHgSK_Lazg-nyBhOI', {action: 'submit'}).then(async function(token){
+                console.log(username.value);
 
-        let body = {
-            korime: username.value,
-            lozinka: password.value,
-            totp: totp.value
-        }
+                let body = {
+                    korime: username.value,
+                    lozinka: password.value,
+                    totp: totp.value,
+                    token: token
+                }
+        
+                let heder = new Headers();
+                heder.set("Content-Type", "application/json");
 
-        let heder = new Headers();
-        heder.set("Content-Type", "application/json");
-
-        let resSignIn = await fetch("/api/korisnici/"+ username.value + "/prijava", {
-            method: "POST",
-            headers: heder,
-            body: JSON.stringify(body)
+                let resSignIn = await fetch("/api/korisnici/"+ username.value + "/prijava", {
+                    method: "POST",
+                    headers: heder,
+                    body: JSON.stringify(body)
+                });
+                if(resSignIn.status == 201){
+                    sessionStorage.setItem('username', username.value);
+                    location.href = "/pocetna";
+                }else if(resSignIn.status == 417){
+                    let responseText = (await resSignIn.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
+                    greska.style.display = "block";
+                    greska.innerHTML = `<p>${responseText}</p>`;
+                }else if(resSignIn.status == 400){
+                    let responseText = (await resSignIn.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
+                    greska.style.display = "block";
+                    greska.innerHTML = `<p>${responseText}</p>`;
+                }
+            });
         });
-        if(resSignIn.status == 201){
-            sessionStorage.setItem('username', username.value);
-            location.href = "/pocetna";
-        }else if(resSignIn.status == 417){
-            let responseText = (await resSignIn.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
-            greska.style.display = "block";
-            greska.innerHTML = `<p>${responseText}</p>`;
-        }else if(resSignIn.status == 400){
-            let responseText = (await resSignIn.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
-            greska.style.display = "block";
-            greska.innerHTML = `<p>${responseText}</p>`;
-        }
-    })
+    });
 });

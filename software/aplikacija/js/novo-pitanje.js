@@ -6,7 +6,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     form.addEventListener("submit", async (event) =>{
         event.preventDefault();
-        await posaljiNovoPitanje();
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6Ldl7NgpAAAAAILzx0tyDFwCHgSK_Lazg-nyBhOI', {action: 'submit'}).then(async function(token) {
+                await posaljiNovoPitanje(token);
+            });
+        });
     });
 });
 
@@ -21,14 +25,15 @@ async function dajJWT(){
     }else return token;
 }
 
-async function posaljiNovoPitanje(){
+async function posaljiNovoPitanje(recToken){
     let token = await dajJWT();
     let naslovPitanja = document.getElementById("pitanje-input");
     let odabiri = await generirajOdgovoreZaSlanje();
 
     let tijelo = {
         pitanje: naslovPitanja.value,
-        odabiri: odabiri
+        odabiri: odabiri,
+        token: recToken
     }
 
     if(token != null){
