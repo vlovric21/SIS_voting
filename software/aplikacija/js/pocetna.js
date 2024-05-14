@@ -24,7 +24,7 @@ async function dohvatiPitanja(str){
             podaci = JSON.parse(podaci);
 
             await prikaziPitanja(podaci);
-
+            await postaviStillZaAutora(podaci);
            
         }
     }
@@ -135,4 +135,13 @@ async function posaljiOdgvor(pitanjeId, odgovorId, recToken){
             console.log(responseText);
         }
     }
+}
+
+async function postaviStillZaAutora(pitanja){
+    pitanja.forEach(async pitanje => {
+        let karticaPitanja = document.getElementById(pitanje.idPitanje).parentNode;
+        if(pitanje.prijavljenNapisao){
+            karticaPitanja.classList.add("autorovoPitanje");
+        }
+    });
 }
