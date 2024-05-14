@@ -24,7 +24,6 @@ class RestOpenIDKorisnik{
                 res.send(JSON.stringify({"greska": "Već imate račun s ovom mail adresom"}));
             }else{
                 this.registrirajOpenIDKorisnika(req, res);
-                //this.kreirajSesiju(req, res);
             }
         }
     }
@@ -35,8 +34,7 @@ class RestOpenIDKorisnik{
 
         let korisnikDAO = new KorisnikDAO(this.sol);
         korisnikDAO.registrirajOpenIDKorisnika(noviKorisnik).then((korime) => {
-            res.status(200);
-            res.send(JSON.stringify({"korime": korime}));
+            this.kreirajSesiju(req, res);
             }).catch((greska) => {
                 res.status(400);
                 res.send(JSON.stringify({"greska": greska.message}));
