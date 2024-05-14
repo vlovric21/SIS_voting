@@ -6,10 +6,7 @@ body{
 }
 p{
     font-size: 20px;
-}
-main{
-    margin-bottom: 5rem;
-}
+} 
 /*******************************PODNIŽJE**********************************/
 footer {
     background-color: #f78432; 
@@ -388,4 +385,33 @@ p a:hover {
 }
 #textWrap{
     overflow-wrap: break-word;
+}
+
+/**********************************STRANICENJE*************************************/
+
+#stranicenje {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 5rem;
+}
+
+#stranicenje button {
+    padding: 10px 20px;
+    background-color: #f78432;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#stranicenje button:hover {
+    background-color: #fc701f;
+}
+
+#trenutnaStranica {
+    margin: 0 20px;
+    font-weight: bold;
 }
