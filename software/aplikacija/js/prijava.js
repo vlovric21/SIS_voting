@@ -10,12 +10,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         grecaptcha.ready(function(){
             grecaptcha.execute('6Ldl7NgpAAAAAILzx0tyDFwCHgSK_Lazg-nyBhOI', {action: 'submit'}).then(async function(token){
                 console.log(username.value);
-
-                let body = {
-                    korime: username.value,
-                    lozinka: password.value,
-                    totp: totp.value,
-                    token: token
+                let body = {};
+                if(provjeriEmail(username.value)){
+                    body = {
+                        mail: username.value,
+                        lozinka: password.value,
+                        totp: totp.value,
+                        token: token
+                    }
+                }else{
+                    body = {
+                        korime: username.value,
+                        lozinka: password.value,
+                        totp: totp.value,
+                        token: token
+                    }
                 }
         
                 let heder = new Headers();
@@ -42,3 +51,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
 });
+
+function provjeriEmail(unos){
+    let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(regexEmail.test(unos)){
+        return true;
+    }else return false;
+}
