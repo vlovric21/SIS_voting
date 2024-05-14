@@ -3,7 +3,6 @@ const HtmlUpravitelj = require("../aplikacija/htmlUpravitelj.js");
 const kodovi = require("./moduli/kodovi.js");
 const mail = require("./moduli/mail.js");
 const jwt = require("./moduli/jwt.js");
-const rec = require("./moduli/recaptcha.js");
 
 class RestKorisnik {
     constructor (sol, putanja, url, jwtTajniKljuc, jwtValjanost) {
@@ -13,20 +12,6 @@ class RestKorisnik {
         this.jwtTajniKljuc = jwtTajniKljuc;
         this.jwtValjanost = jwtValjanost;
     }
-
-    registrirajOpenIDKorisnika = async function (req, res) {
-        res.type("application/json");
-        let noviKorisnik = req.body;
-
-        let korisnikDAO = new KorisnikDAO();
-        korisnikDAO.registrirajOpenIDKorisnika(noviKorisnik).then((korime) => {
-            res.status(200);
-            res.send(JSON.stringify({"korime": korime}));
-            }).catch((greska) => {
-                res.status(400);
-                res.send(JSON.stringify({"greska": greska.message}));
-            });
-        }
 
     registrirajNovogKorisnika = async function (req, res) {
         res.type("application/json");

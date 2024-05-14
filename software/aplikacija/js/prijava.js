@@ -18,7 +18,10 @@ async function handleCredentialResponse(response){
     });
     
     if(res.status == 200){
-        //skuzit kak stavit username u session storage
+        let podatci = await res.json();
+        sessionStorage.setItem('username', podatci.korime);
+        console.log("korime: " + podatci.korime);
+        location.href = "/pocetna";
     }else{
         let responseText = (await res.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
         greska.style.display = "block";

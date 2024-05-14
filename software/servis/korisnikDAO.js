@@ -15,8 +15,8 @@ class KorisnikDAO {
             this.baza.zatvoriVezu();
             throw new Error("Već imate račun s ovom mail adresom");
         }
-        let sql = "INSERT INTO Korisnik (korime, lozinka, mail) VALUES (?, ?, ?);";
-        await this.baza.izvrsiUpit(sql, [korisnik.korime, korisnik.id, korisnik.email]);
+        let sql = "INSERT INTO Korisnik (korime, lozinka, mail, identifikator) VALUES (?, ?, ?, ?);";
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, 0, korisnik.email, korisnik.id]);
         this.baza.zatvoriVezu();
         return korisnik.korime;
     }
@@ -73,6 +73,35 @@ class KorisnikDAO {
         this.baza.zatvoriVezu();
 
         return korisnik.tajniKljuc;
+    }
+
+    provjeriPostojanjeMaila = async function(mail){
+        this.baza.spojiSeNaBazu();
+        let sql = "SELECT * FROM Korisnik WHERE mail = ?;";
+        let dobiveniMail = await this.baza.izvrsiUpit(sql, [mail]);
+        if(dobiveniMail.length == 0){
+            this.baza.zatvoriVezu();
+            return false;
+        }else{
+            this.baza.zatvoriVezu();
+            return true;
+        }
+    }
+
+    provjeriPostojanjeIdentifikatora = async function(id){
+        this.baza.spojiSeNaBazu();
+        let sql = "SELECT * FROM Korisnik WHERE identifikator = ?;";
+        let dobiveniId = await this.baza.izvrsiUpit(sql, [id]);
+        console.log('id:', id);
+        console.log('dobiveniId:', dobiveniId);
+        if(dobiveniId.length == 0){
+            console.log("Returnam false");
+            this.baza.zatvoriVezu();
+            return false;
+        }else{
+            this.baza.zatvoriVezu();
+            return true;
+        }
     }
 
     provjeriPostojanjeKorisnika = async function(korime) {

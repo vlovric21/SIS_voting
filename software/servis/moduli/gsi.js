@@ -13,15 +13,14 @@ exports.verifyOpenIDToken = async function(req, res, next) {
         const payload = ticket.getPayload();
         const userid = payload['sub'];
 
-        // Add the user's information to the request object
         console.log(payload);
         req.user = {
-            korime: payload.given_name + payload.family_name[0],
+            korime: payload.given_name + "_" + payload.family_name[0],
             id: userid,
             email: payload.email,
         };
 
-        next(); // Proceed to the next middleware function or route handler
+        next();
     } catch (error) {
         res.status(401).send('Invalid token');
     }
