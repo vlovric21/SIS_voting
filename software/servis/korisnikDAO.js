@@ -15,8 +15,8 @@ class KorisnikDAO {
             this.baza.zatvoriVezu();
             throw new Error("Već imate račun s ovom mail adresom");
         }
-        let sql = "INSERT INTO Korisnik (korime, lozinka, mail, identifikator) VALUES (?, ?, ?, ?);";
-        await this.baza.izvrsiUpit(sql, [korisnik.korime, 0, korisnik.email, korisnik.id]);
+        let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan, identifikator) VALUES (?, ?, ?, ?, ?);";
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, 0, korisnik.email, 1, korisnik.id]);
         this.baza.zatvoriVezu();
         return korisnik.korime;
     }
