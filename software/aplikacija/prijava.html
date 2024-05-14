@@ -7,6 +7,7 @@
     <meta name="autor" content="David Matijanić, Viktor Lovrić, Magdalena Markovinović">
     <link rel="stylesheet" type="text/css" href="/css">
     <script src="https://www.google.com/recaptcha/api.js?render=6Ldl7NgpAAAAAILzx0tyDFwCHgSK_Lazg-nyBhOI"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <header>
@@ -27,6 +28,11 @@
             <p id="greska"></p>
             <button type="submit">Prijavi se</button>
             <p>Nemate račun? <a href="/registracija">Registrirajte se</a></p>
+            <div id="g_id_onload"
+            data-client_id="438683151533-q7st5pdgcjnd756crf5bgssfiep18cjp.apps.googleusercontent.com"
+            data-callback="handleCredentialResponse">
+            </div>
+            <div class="g_id_signin"></div>
         </form>
     </div>
     <footer>

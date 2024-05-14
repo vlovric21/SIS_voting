@@ -3,7 +3,6 @@ const HtmlUpravitelj = require("../aplikacija/htmlUpravitelj.js");
 const kodovi = require("./moduli/kodovi.js");
 const mail = require("./moduli/mail.js");
 const jwt = require("./moduli/jwt.js");
-const rec = require("./moduli/recaptcha.js");
 
 class RestKorisnik {
     constructor (sol, putanja, url, jwtTajniKljuc, jwtValjanost) {

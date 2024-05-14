@@ -1,1 +1,4 @@
 node_modules
+logs/access.log
+servis/moduli/mailKonf.csv
+baza.sqlite
