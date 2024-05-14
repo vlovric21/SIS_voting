@@ -15,6 +15,12 @@ class KorisnikDAO {
             this.baza.zatvoriVezu();
             throw new Error("Već imate račun s ovom mail adresom");
         }
+
+        let sqlKorime = "SELECT * FROM Korisnik WHERE korime = ?;";
+        while((await this.baza.izvrsiUpit(sqlKorime, [korisnik.korime])).length > 0){
+            korisnik.korime = korisnik.korime + Math.floor(Math.random() * 1000);
+        }
+
         let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan, identifikator) VALUES (?, ?, ?, ?, ?);";
         await this.baza.izvrsiUpit(sql, [korisnik.korime, 0, korisnik.email, 1, korisnik.id]);
         this.baza.zatvoriVezu();
