@@ -259,7 +259,18 @@ input[type="radio"] {
     cursor: pointer;
 }
 
-
+#greskaNovoPitanje{
+    display: none;
+    width: 50%;
+    background-color: red;
+    color: white;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+#greskaNovoPitanje p{
+    width: 100%;
+    text-align: center;
+}
 /****************************PRIJAVA/REGISTRACIJA**********************************/
 .container-login,
 .container-registration {

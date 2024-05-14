@@ -29,35 +29,33 @@ async function posaljiNovoPitanje(recToken){
     let token = await dajJWT();
     let naslovPitanja = document.getElementById("pitanje-input");
     let odabiri = await generirajOdgovoreZaSlanje();
-
     let tijelo = {
         pitanje: naslovPitanja.value,
         odabiri: odabiri,
         token: recToken
     }
-
-    if(token != null){
-        let zaglavlje = new Headers();
-        zaglavlje.set("Content-Type", "application/json");
-        zaglavlje.set("Authorization", `Bearer ${token}`);
-        let parametri = {
-            method: "POST",
-            headers: zaglavlje,
-            body: JSON.stringify(tijelo)
-        }
-
-        let odgovor = await fetch(
-            `/api/pitanja`,
-            parametri
-        );
-
-        if (odgovor.status == 201) {
-            let responseText = (await odgovor.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
-            console.log(responseText);
-            location.href = "/pocetna";
-        }else{
-            let responseText = (await odgovor.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
-            console.log(responseText);
+    if(provjeraPitanja(tijelo)){
+        if(token != null){
+            let zaglavlje = new Headers();
+            zaglavlje.set("Content-Type", "application/json");
+            zaglavlje.set("Authorization", `Bearer ${token}`);
+            let parametri = {
+                method: "POST",
+                headers: zaglavlje,
+                body: JSON.stringify(tijelo)
+            }
+    
+            let odgovor = await fetch(
+                `/api/pitanja`,
+                parametri
+            );
+    
+            if (odgovor.status == 201) {
+                location.href = "/pocetna";
+            }else{
+                let responseText = (await odgovor.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
+                console.log(responseText);
+            }
         }
     }
 }
@@ -135,4 +133,19 @@ function jednostrukiOdgovori(){
             document.getElementById("opcijaInput").value = "";
         }
     });
+}
+
+function provjeraPitanja(tijelo){
+    let greska = document.getElementById("greskaNovoPitanje");
+
+    if (!tijelo.pitanje || tijelo.pitanje.trim() === ""){
+        greska.style.display = "flex";
+        greska.innerHTML = `<p>Naslov pitanja je prazan!`;
+        return false;
+    } else if (!tijelo.odabiri || tijelo.odabiri.length < 2){
+        greska.style.display = "flex";
+        greska.innerHTML = `<p>Moraju biti upisana minimalno 2 odgovora!`;
+        return false;
+    }
+    return true;
 }
