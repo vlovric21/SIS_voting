@@ -11,6 +11,8 @@ import { dirname } from "path";
 import path from "path";
 import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
 import rec from "./servis/moduli/recaptcha.js";
+import gsi from "./servis/moduli/gsi.js";
+import RestOpenIDKorisnik from "./servis/restOpenIDKorisnik.js";
 
 const port = 5000;
 const url = `http://localhost:${port}`;
@@ -87,6 +89,9 @@ function restPrijavaRegistracija(){
 
     server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));
     server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj)); 
+
+    let restOpenIDKorisnik = new RestOpenIDKorisnik(sol, putanja + "/aplikacija", url, jwtTajniKljuc, jwtValjanost);
+    server.post("/api/gsi", gsi.verifyOpenIDToken, restOpenIDKorisnik.prijaviOpenIDKorisnika.bind(restOpenIDKorisnik));
 }
 
 function app() {

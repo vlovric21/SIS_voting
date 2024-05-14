@@ -8,6 +8,25 @@ class KorisnikDAO {
         this.baza = new Baza("baza.sqlite");
     }
 
+    registrirajOpenIDKorisnika = async function(korisnik){
+        this.baza.spojiSeNaBazu();
+        let sqlMail = "SELECT * FROM Korisnik WHERE mail = ?;";
+        if((await this.baza.izvrsiUpit(sqlMail, [korisnik.email])).length > 0){
+            this.baza.zatvoriVezu();
+            throw new Error("Već imate račun s ovom mail adresom");
+        }
+
+        let sqlKorime = "SELECT * FROM Korisnik WHERE korime = ?;";
+        while((await this.baza.izvrsiUpit(sqlKorime, [korisnik.korime])).length > 0){
+            korisnik.korime = korisnik.korime + Math.floor(Math.random() * 1000);
+        }
+
+        let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan, identifikator) VALUES (?, ?, ?, ?, ?);";
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, 0, korisnik.email, 1, korisnik.id]);
+        this.baza.zatvoriVezu();
+        return korisnik.korime;
+    }
+
     registrirajNovogKorisnika = async function(korisnik, authToken) {
         this.baza.spojiSeNaBazu();
         let sqlKorime = "SELECT * FROM Korisnik WHERE korime = ?;";
@@ -60,6 +79,35 @@ class KorisnikDAO {
         this.baza.zatvoriVezu();
 
         return korisnik.tajniKljuc;
+    }
+
+    provjeriPostojanjeMaila = async function(mail){
+        this.baza.spojiSeNaBazu();
+        let sql = "SELECT * FROM Korisnik WHERE mail = ?;";
+        let dobiveniMail = await this.baza.izvrsiUpit(sql, [mail]);
+        if(dobiveniMail.length == 0){
+            this.baza.zatvoriVezu();
+            return false;
+        }else{
+            this.baza.zatvoriVezu();
+            return true;
+        }
+    }
+
+    provjeriPostojanjeIdentifikatora = async function(id){
+        this.baza.spojiSeNaBazu();
+        let sql = "SELECT * FROM Korisnik WHERE identifikator = ?;";
+        let dobiveniId = await this.baza.izvrsiUpit(sql, [id]);
+        console.log('id:', id);
+        console.log('dobiveniId:', dobiveniId);
+        if(dobiveniId.length == 0){
+            console.log("Returnam false");
+            this.baza.zatvoriVezu();
+            return false;
+        }else{
+            this.baza.zatvoriVezu();
+            return true;
+        }
     }
 
     provjeriPostojanjeKorisnika = async function(korime) {
