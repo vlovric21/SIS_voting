@@ -1,4 +1,7 @@
 const Baza = require("./baza/baza.js");
+const kodovi = require("./moduli/kodovi.js");
+
+const polje = kodovi.dajPodatke();
 
 class PitanjaDAO {
     constructor() {
@@ -60,6 +63,12 @@ class PitanjaDAO {
             }
 
             pitanja[pitanjeId].odabiri = dobiveniOdabiri[pitanjeId];
+
+            pitanja[pitanjeId].pitanje = kodovi.decrypt(pitanja[pitanjeId].pitanje, polje[0], polje[1]);
+
+            for (let odabir of pitanja[pitanjeId].odabiri) {
+                odabir.tekst = kodovi.decrypt(odabir.tekst, polje[2], polje[3]);
+            }
         }
 
         this.baza.zatvoriVezu();
@@ -67,6 +76,7 @@ class PitanjaDAO {
     }
 
     postaviNovoPitanje = async function(pitanje, korime) {
+        let enkPitanje = kodovi.encrypt(pitanje.pitanje, polje[0], polje[1]);
         this.baza.spojiSeNaBazu();
         let zadnjiId = 0;
         try {
@@ -74,14 +84,15 @@ class PitanjaDAO {
             let sqlKorId = "SELECT idKorisnik FROM Korisnik WHERE korime = ?;";
             let korId = (await this.baza.izvrsiUpit(sqlKorId, [korime]))[0].idKorisnik;
             let sql = "INSERT INTO Pitanje (pitanje, Korisnik_idKorisnik) VALUES (?, ?);";
-            await this.baza.izvrsiUpit(sql, [pitanje.pitanje, korId]);
+            await this.baza.izvrsiUpit(sql, [enkPitanje, korId]);
             let sqlId = "SELECT last_insert_rowid() AS id";
             zadnjiId = (await this.baza.izvrsiUpit(sqlId))[0].id;
 
             let potrebniUnosi = [];
             for (let odabir of pitanje.odabiri) {
+                let enkOdabir = kodovi.encrypt(odabir.tekst, polje[2], polje[3]);
                 sql = "INSERT INTO Odabir (tekst, Pitanje_idPitanje) VALUES (?, ?);";
-                potrebniUnosi.push(this.baza.izvrsiUpit(sql, [odabir.tekst, zadnjiId]));
+                potrebniUnosi.push(this.baza.izvrsiUpit(sql, [enkOdabir, zadnjiId]));
             }
             await Promise.all(potrebniUnosi);
 

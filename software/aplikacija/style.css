@@ -6,7 +6,7 @@ body{
 }
 p{
     font-size: 20px;
-}
+} 
 /*******************************PODNIŽJE**********************************/
 footer {
     background-color: #f78432; 
@@ -102,12 +102,13 @@ header {
 }
 
 .kartica-pitanja {
+    width: 70%;
+    margin: 10px auto;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
 }
 
 .autor {
@@ -123,6 +124,33 @@ header {
     font-weight: bold;
 }
 
+.statistikaOdgovora{
+    margin-left: 1rem;
+    color: gray;
+    font-size: 14px;
+}
+
+.progress-bar-container {
+    display: flex;
+    margin-left: 1rem;
+    width: 80%;
+    height: 20px; 
+    background-color: #f0f0f0; 
+    border-radius: 5px; 
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    display: inline-block;
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+.autorovoPitanje{
+    background-color: #fc701f20;
+    border: 1px solid #f78432;
+}
 /***********************FORMA*NOVO*PITANJE***************************/
 .container {
     width: 50%;
@@ -231,7 +259,18 @@ input[type="radio"] {
     cursor: pointer;
 }
 
-
+#greskaNovoPitanje{
+    display: none;
+    width: 50%;
+    background-color: red;
+    color: white;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+#greskaNovoPitanje p{
+    width: 100%;
+    text-align: center;
+}
 /****************************PRIJAVA/REGISTRACIJA**********************************/
 .container-login,
 .container-registration {
@@ -242,12 +281,13 @@ input[type="radio"] {
 }
 
 .login-form,
-.registration-form {
+#registration-form {
     background-color: #ffffff;
     padding: 3.5rem;
     border-radius: 8px;
     text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 25%;
 }
 
 .login-form h1 {
@@ -280,6 +320,12 @@ p a {
 p a:hover {
     text-decoration: underline;
 }
+
+#greska {
+    display: none;
+    color: #cc0000; 
+}
+
 /************************ODJAVA****************************/
 
 #odjava{
@@ -311,4 +357,61 @@ p a:hover {
 
 .odjava-kartica a:hover {
     color: #fc701f;
+}
+
+/******************(NE)USPJEPNA*AKTIVACIJA******************/
+.activation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.aktivacija-unutra{
+    background-color: #ffffff;
+    padding: 3.5rem;
+    border-radius: 8px;
+    text-align: left;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 35%;
+}
+
+.aktivacija-unutra a{
+    text-decoration: none;
+    color: #f78432;
+}
+.aktivacija-unutra a:hover{
+    color: blue;
+}
+#textWrap{
+    overflow-wrap: break-word;
+}
+
+/**********************************STRANICENJE*************************************/
+
+#stranicenje {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 5rem;
+}
+
+#stranicenje button {
+    padding: 10px 20px;
+    background-color: #f78432;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#stranicenje button:hover {
+    background-color: #fc701f;
+}
+
+#trenutnaStranica {
+    margin: 0 20px;
+    font-weight: bold;
 }

@@ -112,7 +112,7 @@ class KorisnikDAO {
 
         if(!tfa.provjeriTOTP(korisnik.totp, dobivenKorisnik.tajniKljuc)){
             this.baza.zatvoriVezu();
-            throw new Error("neispravan totp, dani: " + korisnik.totp + "a pravi je: " + tfa.dajTOTP(dobivenKorisnik.tajniKljuc));
+            throw new Error("Neispravan TOTP");
         }
 
         this.baza.zatvoriVezu();
