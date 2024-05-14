@@ -1,6 +1,68 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    await dohvatiPitanja(1);
+    let pocetak = document.getElementById("pocetak");
+    let prethodnaStranica = document.getElementById("prethodnaStranica");
+    let trenutnaStranica = document.getElementById("trenutnaStranica");
+    let sljedecaStranica = document.getElementById("sljedecaStranica");
+    let kraj = document.getElementById("kraj");
+    
+    let stranica = 1;
+    let max = 5;
+    await dohvatiPitanja(stranica);
+    pocetak.style.display = "none";
+    prethodnaStranica.style.display = "none";
+
+    pocetak.addEventListener("click", async () =>
+    {
+        stranica = 1;
+        await dohvatiPitanja(stranica);
+        trenutnaStranica.innerText = stranica;
+        pocetak.style.display = "none";
+        prethodnaStranica.style.display = "none";
+        sljedecaStranica.style.display = "block";
+        kraj.style.display = "block";
+    });
+    prethodnaStranica.addEventListener("click", async () =>
+    {   stranica --;
+        await dohvatiPitanja(stranica);
+        trenutnaStranica.innerText = stranica;
+        if(stranica === 1){
+            pocetak.style.display = "none";
+            prethodnaStranica.style.display = "none";
+        }else{
+            pocetak.style.display = "block";
+            prethodnaStranica.style.display = "block";
+        }
+        sljedecaStranica.style.display = "block";
+        kraj.style.display = "block";
+
+    });
+    sljedecaStranica.addEventListener("click", async () =>
+    {   stranica ++;
+        await dohvatiPitanja(stranica);
+        trenutnaStranica.innerText = stranica;
+        if (stranica >= max) {
+            sljedecaStranica.style.display = "none";
+            kraj.style.display = "none";
+        } else {
+            sljedecaStranica.style.display = "block";
+            kraj.style.display = "block";
+        }
+        pocetak.style.display = "block";
+        prethodnaStranica.style.display = "block";
+    });
+    kraj.addEventListener("click", async () =>
+    {
+        stranica = max;
+        await dohvatiPitanja(stranica);
+        trenutnaStranica.innerText = stranica;
+        sljedecaStranica.style.display = "none";
+        kraj.style.display = "none";
+        pocetak.style.display = "block";
+        prethodnaStranica.style.display = "block";
+
+    });
 });
+
 
 async function dohvatiPitanja(str){
     let token = await dajJWT();
@@ -23,8 +85,10 @@ async function dohvatiPitanja(str){
             let podaci = await odgovor.text();
             podaci = JSON.parse(podaci);
 
+            console.log(podaci);
+
             await prikaziPitanja(podaci);
-            await postaviStillZaAutora(podaci);
+            await postaviStilZaAutora(podaci);
            
         }
     }
@@ -137,7 +201,7 @@ async function posaljiOdgvor(pitanjeId, odgovorId, recToken){
     }
 }
 
-async function postaviStillZaAutora(pitanja){
+async function postaviStilZaAutora(pitanja){
     pitanja.forEach(async pitanje => {
         let karticaPitanja = document.getElementById(pitanje.idPitanje).parentNode;
         if(pitanje.prijavljenNapisao){
