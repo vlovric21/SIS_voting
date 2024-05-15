@@ -119,18 +119,25 @@ class PitanjaDAO {
             let sqlOdabiriZaPitanje = "SELECT * FROM Odabir WHERE Pitanje_idPitanje = ?;";
             let sviOdabiri = await this.baza.izvrsiUpit(sqlOdabiriZaPitanje, [pitanjeId]);
             let sql = "";
-            let potrebnaBrisanja = [];
+            let dobiveniPostojeci = [];
+            let vecPostojiOdabir = false;
             for (let odabir of sviOdabiri) {
-                sql = "DELETE FROM Odgovorio WHERE Korisnik_idKorisnik = ? AND Odabir_idOdabir = ?;";
-                potrebnaBrisanja.push(this.baza.izvrsiUpit(sql, [korisnikId, odabir.idOdabir]));
+                sql = "SELECT * FROM Odgovorio WHERE Korisnik_idKorisnik = ? AND Odabir_idOdabir = ?;";
+                dobiveniPostojeci.push(this.baza.izvrsiUpit(sql, [korisnikId, odabir.idOdabir]));
             }
-            await Promise.all(potrebnaBrisanja);
+            let postojeci = await Promise.all(dobiveniPostojeci);
+            for (let jedanPostojeci of postojeci) {
+                if (jedanPostojeci.length > 0) {
+                    throw new Error("pitanje vec odgovoreno");
+                }
+            }
     
             let sqlUnos = "INSERT INTO Odgovorio VALUES (?, ?)";
             await this.baza.izvrsiUpit(sqlUnos, [korisnikId, odgovorId]);
             await this.baza.izvrsiUpit("COMMIT");
         } catch (greska) {
             await this.baza.izvrsiUpit("ROLLBACK");
+            throw greska;
         }
         this.baza.zatvoriVezu();
 
