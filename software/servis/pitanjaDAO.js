@@ -24,6 +24,10 @@ class PitanjaDAO {
             }
         }
 
+        let sqlBrojPitanja = "SELECT COUNT(*) AS broj FROM Pitanje;";
+        let brojPitanja = (await this.baza.izvrsiUpit(sqlBrojPitanja, []))[0].broj;
+        let brojStranica = Math.ceil(brojPitanja/pitanjaPoStr);
+
         let potrebniOdabiri = [];
         for (let pitanje of pitanja) {
             sql = "SELECT idOdabir, tekst FROM Odabir WHERE Pitanje_idPitanje = ?;";
@@ -65,6 +69,8 @@ class PitanjaDAO {
             pitanja[pitanjeId].odabiri = dobiveniOdabiri[pitanjeId];
 
             pitanja[pitanjeId].pitanje = kodovi.decrypt(pitanja[pitanjeId].pitanje, polje[0], polje[1]);
+
+            pitanja[pitanjeId].brojStranica = brojStranica;
 
             for (let odabir of pitanja[pitanjeId].odabiri) {
                 odabir.tekst = kodovi.decrypt(odabir.tekst, polje[2], polje[3]);
