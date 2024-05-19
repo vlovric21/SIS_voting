@@ -111,11 +111,19 @@ function provjeriTijeloPitanja(pitanje = null) {
     let greske = "";
     if (pitanje.pitanje == null || pitanje.pitanje == undefined || (typeof pitanje.pitanje != "string")) {
         greske += "nije uneseno pitanje";
+    } else {
+        if (pitanje.pitanje.trim() === "") {
+            greske += "naslov pitanja je prazan";
+        }
     }
     if (pitanje.odabiri == null || pitanje.odabiri == undefined || (typeof pitanje.odabiri != "object")) {
         if (greske != "") greske += ", ";
         greske += "nisu uneseni odabiri";
     } else {
+        if (pitanje.odabiri.length < 2) {
+            greske += "moraju biti upisana minimalno 2 odgovora";
+        }
+
         if (!Array.isArray(pitanje.odabiri)) {
             if (greske != "") greske += ", ";
             greske += "odabiri su neispravni";

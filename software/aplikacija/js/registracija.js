@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             if(res.status == 201){
                                 location.href = "/prijava";
                                 console.log(location);
-                            }else if(res.status == 400){
+                            }else if(res.status == 400 || res.status == 417){
                                 let responseText = (await res.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
                                 greska.style.display = "block";
                                 greska.innerHTML = `<p>${responseText}</p>`;
@@ -49,15 +49,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function provjeriRegexUsername(username){
-
-    let regexUsername = /^(?=.*\d).{6,}$/;
-    if(regexUsername.test(username)){
-        return true;
-    }else{
+    if (username.length < 6) {
         greska.style.display = "block";
         greska.innerHTML = `<p>Korisničko ime mora imati minimalno 6 znakova!</p>`;
         return false;
     }
+    if (username.length > 45) {
+        greska.style.display = "block";
+        greska.innerHTML = `<p>Korisničko ime smije imati maksimalno 45 znakova!</p>`;
+        return false;
+    }
+    return true;
 }
 
 function provjeriRegexEmail(email){
@@ -80,7 +82,7 @@ function provjeriRegexPassword(password){
         return true;
     }else{
         greska.style.display = "block";
-        greska.innerHTML = `<p>Lozinka mora sadržavati minimalno 8 znakova od kojih je jedan broj i jedan poebni znak ($, #, !, ?, ^)!</p>`;
+        greska.innerHTML = `<p>Lozinka mora sadržavati minimalno 8 znakova od kojih je jedan broj i jedan posebni znak ($, #, !, ?, ^)!</p>`;
         return false;
     }
 }

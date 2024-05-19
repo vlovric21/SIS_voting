@@ -155,10 +155,18 @@ function provjeriTijeloKorisnik(korisnik = null) {
         greske += "nije uneseno korisnicko ime";
     } else if (korisnik.korime.length > 45) {
         greske += "korisnicko ime mora imati maksimalno 45 znakova";
+    } else if (korisnik.korime.length < 6) {
+        greske += "korisnicko ime mora imati minimalno 6 znakova";
     }
     if (korisnik.lozinka == null || korisnik.lozinka == undefined || (typeof korisnik.lozinka != "string")) {
         if (greske != "") greske += ", ";
         greske += "nije unesena lozinka";
+    } else {
+        let lozinkaRegex = /^(?=.*\d)(?=.*[!@#$%^&*()-_+=])[^\s]{8,}$/;
+        if (!lozinkaRegex.test(korisnik.lozinka)) {
+            if (greske != "") greske += ", ";
+            greske += "neispravna lozinka";
+        }
     }
     if (korisnik.mail == null || korisnik.mail == undefined || (typeof korisnik.mail != "string")) {
         if (greske != "") greske += ", ";
@@ -170,7 +178,7 @@ function provjeriTijeloKorisnik(korisnik = null) {
             greske += "mail adresa mora imati maksimalno 50 znakova";
         }
 
-        let mailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        let mailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!mailRegex.test(korisnik.mail)) {
             if (greske != "") greske += ", ";
             greske += "neispravna mail adresa";
