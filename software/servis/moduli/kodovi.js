@@ -62,7 +62,7 @@ exports.decrypt = function(tekstEnk, kljuc, iv){
 let k = ds.readFileSync(__dirname + "/k.json");
 const data = JSON.parse(k);
 
-exports.dajPodatke = function(){
+_dajPodatke = function(){
 	const polje = [
 		data.a[23],
     	data.b[16],
@@ -70,4 +70,16 @@ exports.dajPodatke = function(){
     	data.b[27], 
 	];
 	return polje;
+}
+
+exports.dajPodatkeA = function(){ //pitanje
+	let polje = _dajPodatke();
+	let poljeA = polje.slice(0,2);
+	return poljeA;
+}
+
+exports.dajPodatkeB = function(){ //odabir
+	let polje = _dajPodatke();
+	let poljeB = polje.slice(2,4);
+	return poljeB;
 }

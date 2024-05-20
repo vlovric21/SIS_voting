@@ -1,7 +1,8 @@
 const Baza = require("./baza/baza.js");
 const kodovi = require("./moduli/kodovi.js");
 
-const polje = kodovi.dajPodatke();
+const poljeA = kodovi.dajPodatkeA();
+const poljeB = kodovi.dajPodatkeB();
 
 class PitanjaDAO {
     constructor() {
@@ -68,12 +69,12 @@ class PitanjaDAO {
 
             pitanja[pitanjeId].odabiri = dobiveniOdabiri[pitanjeId];
 
-            pitanja[pitanjeId].pitanje = kodovi.decrypt(pitanja[pitanjeId].pitanje, polje[0], polje[1]);
+            pitanja[pitanjeId].pitanje = kodovi.decrypt(pitanja[pitanjeId].pitanje, poljeA[0], poljeA[1]);
 
             pitanja[pitanjeId].brojStranica = brojStranica;
 
             for (let odabir of pitanja[pitanjeId].odabiri) {
-                odabir.tekst = kodovi.decrypt(odabir.tekst, polje[2], polje[3]);
+                odabir.tekst = kodovi.decrypt(odabir.tekst, poljeB[0], poljeB[1]);
             }
         }
 
@@ -82,7 +83,7 @@ class PitanjaDAO {
     }
 
     postaviNovoPitanje = async function(pitanje, korime) {
-        let enkPitanje = kodovi.encrypt(pitanje.pitanje, polje[0], polje[1]);
+        let enkPitanje = kodovi.encrypt(pitanje.pitanje, poljeA[0], poljeA[1]);
         this.baza.spojiSeNaBazu();
         let zadnjiId = 0;
         try {
@@ -96,7 +97,7 @@ class PitanjaDAO {
 
             let potrebniUnosi = [];
             for (let odabir of pitanje.odabiri) {
-                let enkOdabir = kodovi.encrypt(odabir.tekst, polje[2], polje[3]);
+                let enkOdabir = kodovi.encrypt(odabir.tekst, poljeB[0], poljeB[1]);
                 sql = "INSERT INTO Odabir (tekst, Pitanje_idPitanje) VALUES (?, ?);";
                 potrebniUnosi.push(this.baza.izvrsiUpit(sql, [enkOdabir, zadnjiId]));
             }
