@@ -2,6 +2,8 @@ const Baza = require("./baza/baza.js");
 const kodovi = require("./moduli/kodovi.js");
 const tfa = require("./moduli/2fa.js");
 
+const podatci = kodovi.dajPodatkeA();
+
 class KorisnikDAO {
     constructor(sol) {
         this.sol = sol;
@@ -9,9 +11,10 @@ class KorisnikDAO {
     }
 
     registrirajOpenIDKorisnika = async function(korisnik){
+        let enkMail = kodovi.encrypt(korisnik.email, podatci[0], podatci[1]);
         this.baza.spojiSeNaBazu();
         let sqlMail = "SELECT * FROM Korisnik WHERE mail = ?;";
-        if((await this.baza.izvrsiUpit(sqlMail, [korisnik.email])).length > 0){
+        if((await this.baza.izvrsiUpit(sqlMail, [enkMail])).length > 0){
             this.baza.zatvoriVezu();
             throw new Error("Već imate račun s ovom mail adresom");
         }
@@ -22,12 +25,13 @@ class KorisnikDAO {
         }
 
         let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan, identifikator) VALUES (?, ?, ?, ?, ?);";
-        await this.baza.izvrsiUpit(sql, [korisnik.korime, 0, korisnik.email, 1, korisnik.id]);
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, 0, enkMail, 1, korisnik.id]);
         this.baza.zatvoriVezu();
         return korisnik.korime;
     }
 
     registrirajNovogKorisnika = async function(korisnik, authToken) {
+        let enkMail = kodovi.encrypt(korisnik.mail, podatci[0], podatci[1]);
         this.baza.spojiSeNaBazu();
         let sqlKorime = "SELECT * FROM Korisnik WHERE korime = ?;";
         if ((await this.baza.izvrsiUpit(sqlKorime, [korisnik.korime])).length > 0) {
@@ -36,13 +40,13 @@ class KorisnikDAO {
         }
 
         let sqlMail = "SELECT * FROM Korisnik WHERE mail = ?;";
-        if ((await this.baza.izvrsiUpit(sqlMail, [korisnik.mail])).length > 0) {
+        if ((await this.baza.izvrsiUpit(sqlMail, [enkMail])).length > 0) {
             this.baza.zatvoriVezu();
             throw new Error("korisnik s tim mailom vec postoji");
         }
 
         let sql = "INSERT INTO Korisnik (korime, lozinka, mail, aktivan, authToken, tajniKljuc) VALUES (?, ?, ?, 0, ?, ?);";
-        await this.baza.izvrsiUpit(sql, [korisnik.korime, kodovi.kreirajSHA512(korisnik.lozinka, this.sol), korisnik.mail, kodovi.kreirajSHA512(authToken), tfa.kreirajTajniKljuc(korisnik.korime)]);
+        await this.baza.izvrsiUpit(sql, [korisnik.korime, kodovi.kreirajSHA512(korisnik.lozinka, this.sol), enkMail, kodovi.kreirajSHA512(authToken), tfa.kreirajTajniKljuc(korisnik.korime)]);
 
         this.baza.zatvoriVezu();
 
@@ -82,9 +86,10 @@ class KorisnikDAO {
     }
 
     provjeriPostojanjeMaila = async function(mail){
+        let enkMail = kodovi.encrypt(mail, podatci[0], podatci[1]);
         this.baza.spojiSeNaBazu();
         let sql = "SELECT * FROM Korisnik WHERE mail = ?;";
-        let dobiveniMail = await this.baza.izvrsiUpit(sql, [mail]);
+        let dobiveniMail = await this.baza.izvrsiUpit(sql, [enkMail]);
         if(dobiveniMail.length == 0){
             this.baza.zatvoriVezu();
             return false;
