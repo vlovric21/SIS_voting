@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         pocetak.style.display = "block";
         prethodnaStranica.style.display = "block";
-        console.log(maxStr);
     });
     kraj.addEventListener("click", async () =>
     {
@@ -89,7 +88,6 @@ async function dohvatiPitanja(str){
             podaci = JSON.parse(podaci);
             if(maxStr === 1){
                 maxStr = podaci[0].brojStranica;
-                console.log(maxStr);
             }
 
             await prikaziPitanja(podaci);
@@ -120,7 +118,7 @@ async function prikaziPitanja(pitanja){
         lista += `<form id="${p.idPitanje}" action="#">
                     <div id="odgovori${p.idPitanje}" class="odgovori">
                     </div>
-                    <button type="submit">Pošalji</button>
+                    <button id="posalji${p.idPitanje}" type="submit">Pošalji</button>
                 </form>
                 <h4>Ukupan broj odgovora: ${p.ukupnoOdgovora}</h4>
             </div>`;
@@ -130,6 +128,10 @@ async function prikaziPitanja(pitanja){
 
     pitanja.forEach(async pitanje => {
         await prikaziOdgovore(pitanje);
+        if(pitanje.ukupnoOdgovora != undefined){
+            let posalji = document.getElementById(`posalji${pitanje.idPitanje}`);
+            posalji.style.display = "none";
+        }
     });
 
     await postaviSlusace();
@@ -171,7 +173,11 @@ async function postaviSlusace(){
                         if(element.checked)
                             odabraniOdg = element;
                     });
-                    await posaljiOdgvor(trenutnaForma.id, odabraniOdg.id, token);
+                    if(odabraniOdg != null){
+                        await posaljiOdgvor(trenutnaForma.id, odabraniOdg.id, token);
+                    }else{
+                        alert("Odaberite odgovor!");
+                    }
                 });
                 });
             });
