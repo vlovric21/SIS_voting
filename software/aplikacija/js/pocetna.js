@@ -1,3 +1,6 @@
+let stranica = 1;
+let maxStr = 1;
+
 document.addEventListener("DOMContentLoaded", async () => {
     let pocetak = document.getElementById("pocetak");
     let prethodnaStranica = document.getElementById("prethodnaStranica");
@@ -5,8 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let sljedecaStranica = document.getElementById("sljedecaStranica");
     let kraj = document.getElementById("kraj");
     
-    let stranica = 1;
-    let max = 5;
+    
     await dohvatiPitanja(stranica);
     pocetak.style.display = "none";
     prethodnaStranica.style.display = "none";
@@ -40,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     {   stranica ++;
         await dohvatiPitanja(stranica);
         trenutnaStranica.innerText = stranica;
-        if (stranica >= max) {
+        if (stranica >= maxStr) {
             sljedecaStranica.style.display = "none";
             kraj.style.display = "none";
         } else {
@@ -49,10 +51,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         pocetak.style.display = "block";
         prethodnaStranica.style.display = "block";
+        console.log(maxStr);
     });
     kraj.addEventListener("click", async () =>
     {
-        stranica = max;
+        stranica = maxStr;
         await dohvatiPitanja(stranica);
         trenutnaStranica.innerText = stranica;
         sljedecaStranica.style.display = "none";
@@ -84,8 +87,10 @@ async function dohvatiPitanja(str){
         if (odgovor.status == 200) {
             let podaci = await odgovor.text();
             podaci = JSON.parse(podaci);
-
-            console.log(podaci);
+            if(maxStr === 1){
+                maxStr = podaci[0].brojStranica;
+                console.log(maxStr);
+            }
 
             await prikaziPitanja(podaci);
             await postaviStilZaAutora(podaci);
