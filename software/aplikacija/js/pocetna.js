@@ -112,6 +112,10 @@ async function prikaziPitanja(pitanja){
     let listaPitanja = document.getElementById("lista-pitanja");
     let lista = "";
     for (let p of pitanja){
+        let brOdgovora = "0";
+        if(p.ukupnoOdgovora != undefined){
+            brOdgovora = p.ukupnoOdgovora;
+        }
         lista += '<div id="pitanje" class="kartica-pitanja">';
         lista += `<div class="autor">Autor: ${p.autor}</div>`;
         lista += `<h2 class="naslov-pitanja">${p.pitanje}</h2>`
@@ -120,7 +124,7 @@ async function prikaziPitanja(pitanja){
                     </div>
                     <button id="posalji${p.idPitanje}" type="submit">Pošalji</button>
                 </form>
-                <h4>Ukupan broj odgovora: ${p.ukupnoOdgovora}</h4>
+                <h4>Ukupan broj odgovora: ${brOdgovora}</h4>
             </div>`;
     }
 
