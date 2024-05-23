@@ -13,6 +13,7 @@ import HtmlUpravitelj from "./aplikacija/htmlUpravitelj.js";
 import rec from "./servis/moduli/recaptcha.js";
 import gsi from "./servis/moduli/gsi.js";
 import RestOpenIDKorisnik from "./servis/restOpenIDKorisnik.js";
+import kljucevi from "./servis/moduli/kljucevi.js";
 
 const port = 5000;
 const url = `http://localhost:${port}`;
@@ -43,10 +44,16 @@ server.use(sesija({
     resave: false
 }));
 
+kljucevi.generirajIPohraniKljuceve(path.join(putanja, "/servis/kljucevi"));
+
 server.use("/css", express.static("./aplikacija/style.css"));
 server.use("/js", express.static("./aplikacija/js"));
 
 restPrijavaRegistracija();
+
+server.get("/public-key", (req, res) => {
+    const publicKey = fs.readFileSync()
+});
 
 server.all("*", (zahtjev, odgovor, nastavi) => {
     if(zahtjev.session.korime == null){
