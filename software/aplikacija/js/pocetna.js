@@ -1,3 +1,6 @@
+let stranica = 1;
+let maxStr = 1;
+
 document.addEventListener("DOMContentLoaded", async () => {
     let pocetak = document.getElementById("pocetak");
     let prethodnaStranica = document.getElementById("prethodnaStranica");
@@ -5,8 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let sljedecaStranica = document.getElementById("sljedecaStranica");
     let kraj = document.getElementById("kraj");
     
-    let stranica = 1;
-    let max = 5;
+    
     await dohvatiPitanja(stranica);
     pocetak.style.display = "none";
     prethodnaStranica.style.display = "none";
@@ -40,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     {   stranica ++;
         await dohvatiPitanja(stranica);
         trenutnaStranica.innerText = stranica;
-        if (stranica >= max) {
+        if (stranica >= maxStr) {
             sljedecaStranica.style.display = "none";
             kraj.style.display = "none";
         } else {
@@ -52,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     kraj.addEventListener("click", async () =>
     {
-        stranica = max;
+        stranica = maxStr;
         await dohvatiPitanja(stranica);
         trenutnaStranica.innerText = stranica;
         sljedecaStranica.style.display = "none";
@@ -84,8 +86,9 @@ async function dohvatiPitanja(str){
         if (odgovor.status == 200) {
             let podaci = await odgovor.text();
             podaci = JSON.parse(podaci);
-
-            console.log(podaci);
+            if(maxStr === 1){
+                maxStr = podaci[0].brojStranica;
+            }
 
             await prikaziPitanja(podaci);
             await postaviStilZaAutora(podaci);
@@ -109,15 +112,19 @@ async function prikaziPitanja(pitanja){
     let listaPitanja = document.getElementById("lista-pitanja");
     let lista = "";
     for (let p of pitanja){
+        let brOdgovora = "0";
+        if(p.ukupnoOdgovora != undefined){
+            brOdgovora = p.ukupnoOdgovora;
+        }
         lista += '<div id="pitanje" class="kartica-pitanja">';
         lista += `<div class="autor">Autor: ${p.autor}</div>`;
         lista += `<h2 class="naslov-pitanja">${p.pitanje}</h2>`
         lista += `<form id="${p.idPitanje}" action="#">
                     <div id="odgovori${p.idPitanje}" class="odgovori">
                     </div>
-                    <button type="submit">Pošalji</button>
+                    <button id="posalji${p.idPitanje}" type="submit">Pošalji</button>
                 </form>
-                <h4>Ukupan broj odgovora: ${p.ukupnoOdgovora}</h4>
+                <h4>Ukupan broj odgovora: ${brOdgovora}</h4>
             </div>`;
     }
 
@@ -125,6 +132,10 @@ async function prikaziPitanja(pitanja){
 
     pitanja.forEach(async pitanje => {
         await prikaziOdgovore(pitanje);
+        if(pitanje.ukupnoOdgovora != undefined){
+            let posalji = document.getElementById(`posalji${pitanje.idPitanje}`);
+            posalji.style.display = "none";
+        }
     });
 
     await postaviSlusace();
@@ -166,7 +177,11 @@ async function postaviSlusace(){
                         if(element.checked)
                             odabraniOdg = element;
                     });
-                    await posaljiOdgvor(trenutnaForma.id, odabraniOdg.id, token);
+                    if(odabraniOdg != null){
+                        await posaljiOdgvor(trenutnaForma.id, odabraniOdg.id, token);
+                    }else{
+                        alert("Odaberite odgovor!");
+                    }
                 });
                 });
             });
