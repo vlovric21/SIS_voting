@@ -1,3 +1,5 @@
+import { getPublicKey } from "./kriptiranje.js";
+
 async function handleCredentialResponse(response){
     let greska = document.getElementById("greska");
 
@@ -39,6 +41,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     form.addEventListener("submit", async (event)=> {
         event.preventDefault();
+
+        let kljuc = await getPublicKey();
+        console.log("KLJUČ: " + kljuc);
+
         grecaptcha.ready(function(){
             grecaptcha.execute('6Ldl7NgpAAAAAILzx0tyDFwCHgSK_Lazg-nyBhOI', {action: 'submit'}).then(async function(token){
                 console.log(username.value);

@@ -44,7 +44,8 @@ server.use(sesija({
     resave: false
 }));
 
-kljucevi.generirajIPohraniKljuceve(path.join(putanja, "/servis/kljucevi"));
+const kljuceviPutanja = path.join(putanja, "/servis/kljucevi");
+kljucevi.generirajIPohraniKljuceve(kljuceviPutanja);
 
 server.use("/css", express.static("./aplikacija/style.css"));
 server.use("/js", express.static("./aplikacija/js"));
@@ -52,7 +53,8 @@ server.use("/js", express.static("./aplikacija/js"));
 restPrijavaRegistracija();
 
 server.get("/public-key", (req, res) => {
-    const publicKey = fs.readFileSync()
+    const publicKey = fs.readFileSync(path.join(kljuceviPutanja, "/public_key.pem"));
+    res.send(publicKey);
 });
 
 server.all("*", (zahtjev, odgovor, nastavi) => {
