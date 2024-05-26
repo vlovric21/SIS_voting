@@ -85,7 +85,7 @@ function restPrijavaRegistracija(){
     server.post("/api/korisnici", rec.validirajRecaptchu, restKorisnik.registrirajNovogKorisnika.bind(restKorisnik));
     server.get("/api/korisnici/aktiviraj/:korime", restKorisnik.aktivirajKorisnika.bind(restKorisnik));
     server.get("/api/korisnici/:korime/prijava", restKorisnik.dobijJWT.bind(restKorisnik));
-    server.post("/api/korisnici/:korime/prijava", rec.validirajRecaptchu, restKorisnik.kreirajSesiju.bind(restKorisnik));
+    server.post("/api/korisnici/prijava", rec.validirajRecaptchu, restKorisnik.kreirajSesiju.bind(restKorisnik));
 
     server.get("/prijava", htmlUpravitelj.prijava.bind(htmlUpravitelj));
     server.get("/registracija", htmlUpravitelj.registracija.bind(htmlUpravitelj)); 

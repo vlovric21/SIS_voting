@@ -116,24 +116,13 @@ class RestKorisnik {
             return;
         }
 
-        let korime = req.params.korime;
-        if (korisnik.korime != undefined && korisnik.korime != null && korisnik.korime != "") {
-            if (korisnik.korime != korime) {
-                res.status(417);
-                res.send(JSON.stringify({"greska": "neocekivani podaci"}));
-                return;
-            }
-        } else {
-            korisnik.korime = korime;
-        }
-
         let korisnikDAO = new KorisnikDAO(this.sol);
-        korisnikDAO.provjeriKorisnickePodatke(korisnik).then((uspjeh) => {
+        korisnikDAO.provjeriKorisnickePodatke(korisnik).then((korime) => {
             if (req.session.korime === null || req.session.korime === undefined) {
-                req.session.korime = korisnik.korime;
+                req.session.korime = korime;
 
                 res.status(201);
-                res.send(JSON.stringify({"korime": korisnik.korime}));
+                res.send(JSON.stringify({"korime": korime}));
             } else {
                 res.status(400);
                 res.send(JSON.stringify({"greska": "vec postoji prijava"}));

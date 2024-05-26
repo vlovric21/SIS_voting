@@ -62,13 +62,15 @@ document.addEventListener("DOMContentLoaded", async () => {
                 let heder = new Headers();
                 heder.set("Content-Type", "application/json");
 
-                let resSignIn = await fetch("/api/korisnici/"+ username.value + "/prijava", {
+                let resSignIn = await fetch("/api/korisnici/prijava", {
                     method: "POST",
                     headers: heder,
                     body: JSON.stringify(body)
                 });
                 if(resSignIn.status == 201){
-                    sessionStorage.setItem('username', username.value);
+                    let responseText = await resSignIn.text();
+                    let response = JSON.parse(responseText);
+                    sessionStorage.setItem('username', response.korime);
                     location.href = "/pocetna";
                 }else if(resSignIn.status == 417){
                     let responseText = (await resSignIn.text()).replace(/("|{|}|\bgreska\b|:)/g, " ");
