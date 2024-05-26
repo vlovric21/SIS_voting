@@ -118,6 +118,7 @@ function provjeriTijeloPitanja(pitanje = null) {
             greske += "naslov pitanja je prazan";
         } else
         if (xssRegex.test(pitanje.pitanje)) {
+            if (greske != "") greske += ", ";
             greske += "dobar pokušaj";
         }
     }
@@ -140,6 +141,7 @@ function provjeriTijeloPitanja(pitanje = null) {
                     break;
                 } else {
                     if (xssRegex.test(odabir.tekst)) {
+                        if (greske != "") greske += ", ";
                         greske += "dobar pokusaj sa odabirima";
                         break;
                     }

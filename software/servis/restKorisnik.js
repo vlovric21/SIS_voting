@@ -150,13 +150,21 @@ function provjeriTijeloKorisnik(korisnik = null) {
         return "korisnik nije poslan";
     }
 
+    let xssRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/;
+
     let greske = "";
     if (korisnik.korime == null || korisnik.korime == undefined || (typeof korisnik.korime != "string")) {
         greske += "nije uneseno korisnicko ime";
-    } else if (korisnik.korime.length > 45) {
-        greske += "korisnicko ime mora imati maksimalno 45 znakova";
-    } else if (korisnik.korime.length < 6) {
-        greske += "korisnicko ime mora imati minimalno 6 znakova";
+    } else {
+        if (korisnik.korime.length > 45) {
+            greske += "korisnicko ime mora imati maksimalno 45 znakova";
+        } else if (korisnik.korime.length < 6) {
+            greske += "korisnicko ime mora imati minimalno 6 znakova";
+        }
+        if (xssRegex.test(korisnik.korime)) {
+            if (greske != "") greske += ", ";
+            greske += "korisnicko ime ne smije biti maliciozno";
+        }
     }
     if (korisnik.lozinka == null || korisnik.lozinka == undefined || (typeof korisnik.lozinka != "string")) {
         if (greske != "") greske += ", ";
@@ -182,6 +190,11 @@ function provjeriTijeloKorisnik(korisnik = null) {
         if (!mailRegex.test(korisnik.mail)) {
             if (greske != "") greske += ", ";
             greske += "neispravna mail adresa";
+        }
+
+        if (xssRegex.test(korisnik.mail)) {
+            if (greske != "") greske += ", ";
+            greske += "mail adresa ne smije biti maliciozna";
         }
     }
 
