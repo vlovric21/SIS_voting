@@ -108,12 +108,18 @@ function provjeriTijeloPitanja(pitanje = null) {
         return "pitanje nije poslano";
     }
 
+    let xssRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/;
+
     let greske = "";
     if (pitanje.pitanje == null || pitanje.pitanje == undefined || (typeof pitanje.pitanje != "string")) {
         greske += "nije uneseno pitanje";
     } else {
         if (pitanje.pitanje.trim() === "") {
             greske += "naslov pitanja je prazan";
+        } else
+        if (xssRegex.test(pitanje.pitanje)) {
+            if (greske != "") greske += ", ";
+            greske += "dobar pokušaj";
         }
     }
     if (pitanje.odabiri == null || pitanje.odabiri == undefined || (typeof pitanje.odabiri != "object")) {
@@ -133,6 +139,12 @@ function provjeriTijeloPitanja(pitanje = null) {
                     if (greske != "") greske += ", ";
                     greske += "neki od odabira su neispravni";
                     break;
+                } else {
+                    if (xssRegex.test(odabir.tekst)) {
+                        if (greske != "") greske += ", ";
+                        greske += "dobar pokusaj sa odabirima";
+                        break;
+                    }
                 }
             }
         }

@@ -137,8 +137,20 @@ class KorisnikDAO {
 
     provjeriKorisnickePodatke = async function(korisnik) {
         this.baza.spojiSeNaBazu();
-        let sql = "SELECT * FROM Korisnik WHERE korime = ?;";
-        let dobiveniKorisnici = await this.baza.izvrsiUpit(sql, [korisnik.korime]);
+
+        let dobiveniKorisnici;
+        if (korisnik.korime != undefined) {
+            let sql = "SELECT * FROM Korisnik WHERE korime = ?;";
+            dobiveniKorisnici = await this.baza.izvrsiUpit(sql, [korisnik.korime]);
+        } else if (korisnik.mail != undefined) {
+            let sql = "SELECT * FROM Korisnik WHERE mail = ?;";
+            let enkMail = kodovi.encrypt(korisnik.mail, podatci[0], podatci[1]);
+            dobiveniKorisnici = await this.baza.izvrsiUpit(sql, [enkMail]);
+        } else {
+            this.baza.zatvoriVezu();
+            throw new Error("korisnik ne postoji");
+        }
+
         if (dobiveniKorisnici.length == 0) {
             this.baza.zatvoriVezu();
             throw new Error("korisnik ne postoji");
@@ -156,11 +168,9 @@ class KorisnikDAO {
             throw new Error("korisnik nije aktiviran");
         }
 
-        if (korisnik.mail != undefined) {
-            if (korisnik.mail != dobivenKorisnik.mail) {
-                this.baza.zatvoriVezu();
-                throw new Error("neispravan mail");
-            }
+        if (dobivenKorisnik.identifikator != null && dobivenKorisnik.identifikator != "") {
+            this.baza.zatvoriVezu();
+            throw new Error("korisnik ne postoji"); 
         }
 
         if(!tfa.provjeriTOTP(korisnik.totp, dobivenKorisnik.tajniKljuc)){
@@ -170,7 +180,7 @@ class KorisnikDAO {
 
         this.baza.zatvoriVezu();
 
-        return "uspjesna prijava";
+        return dobivenKorisnik.korime;
     }
 
     dajIdKorisnika = async function(korime) {
