@@ -144,12 +144,14 @@ async function prikaziPitanja(pitanja){
 async function prikaziOdgovore(pitanje){
     let odabiri = document.getElementById(`odgovori${pitanje.idPitanje}`);
     let listaOdg = "";
+    let tempBrojOdgovora = "0";
     for (let o of pitanje.odabiri){
+        if(o.brojOdgovora != undefined || o.brojOdgovora != null) tempBrojOdgovora = o.brojOdgovora;
         listaOdg += `<input type="radio" id="${o.idOdabir}" name="odgovor" value="odgovor${o.idOdabir}">`;
         listaOdg += `<label for="${o.idOdabir}">${o.tekst}</label>`;
         listaOdg += `<div class="progress-bar-container">
                         <div class="progress-bar" style="width: ${calculateProgressBarWidth(o.brojOdgovora, pitanje.ukupnoOdgovora)};"></div>
-                        <label class="statistikaOdgovora" for="${o.idOdabir}">${o.brojOdgovora} odgovora</label>
+                        <label class="statistikaOdgovora" for="${o.idOdabir}">${tempBrojOdgovora} odgovora</label>
                     </div><br>`;
     }
     odabiri.innerHTML = listaOdg;
