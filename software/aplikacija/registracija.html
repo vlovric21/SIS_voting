@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="hr">
+<head>
+    <title>Registracija</title>
+    <meta charset="utf-8">
+    <meta name="autor" content="David Matijanić, Viktor Lovrić, Magdalena Markovinović">
+    <link rel="stylesheet" type="text/css" href="/css">
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ldl7NgpAAAAAILzx0tyDFwCHgSK_Lazg-nyBhOI"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">SIS-Voting</div>
+    </header>
+    <div class="container-registration">
+        <form id="registration-form">
+            <h1>Registracija</h1>
+            <div class="input-container">
+                <input id="username" type="text" placeholder="Username" required>
+            </div>
+            <div class="input-container">
+                <input id="email" type="text" placeholder="Email" required>
+            </div>
+            <div class="input-container">
+                <input id="password" type="password" placeholder="Lozinka" required>
+            </div>
+            <div class="input-container">
+                <input type="password" id="retryPasword" placeholder="Ponovi lozinku" required>
+            </div>
+            <p id="greska"></p>
+            <button id="submitButton" type="submit">Registriraj se</button>
+            <p>Već imate račun? <a href="/prijava">Prijavite se</a></p>
+        </form>
+    </div>
+    <footer>
+        &copy; David Matijanić, 
+        Viktor Lovrić,
+        Magdalena Markovinović
+        2024.
+    </footer>
+    <script src="/js/registracija.js"></script>
+</body>
+</html>

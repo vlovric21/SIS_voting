@@ -1,0 +1,417 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background-color: aliceblue;
+    font-size: 20px;
+}
+p{
+    font-size: 20px;
+} 
+/*******************************PODNIŽJE**********************************/
+footer {
+    background-color: #f78432; 
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 20px;
+    text-align: center;
+}
+/*******************************NAVIGACIJA**********************************/
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 99%;
+    background-color: #f78432;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+.navigation ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigation ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navigation ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.logout a {
+    background-color: white;
+    text-decoration: none;
+    font-size: medium;
+    color: #f78432;
+    border: none;
+    padding: 10px 20px;
+    margin-right: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.logout button:hover {
+    background-color: #f0f0f0;
+}
+/***************************POČETNA***********************************/
+.big-heading{
+    display: block;
+    width: 70%;
+    margin: 6rem auto;
+    text-align: center;
+}
+
+.new-poll-button{
+    background-color: black;
+    display: flex;
+    position: fixed;
+    bottom: 4rem;
+    right: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    align-items: center;
+    border-radius: 5px;
+    z-index: 11;
+}
+
+.new-poll-button i{
+    color: white;
+    font-size: 40px;
+    margin-left: 0.6rem;
+}
+
+.new-poll-button a{
+    text-decoration: none;
+    color: white;
+    font-size: large;
+}
+
+.kartica-pitanja {
+    width: 70%;
+    margin: 10px auto;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.autor {
+    float: right;
+    font-size: 14px;
+    color: #888;
+}
+
+.naslov-pitanja {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.statistikaOdgovora{
+    margin-left: 1rem;
+    color: gray;
+    font-size: 14px;
+}
+
+.progress-bar-container {
+    display: flex;
+    margin-left: 1rem;
+    width: 80%;
+    height: 20px; 
+    background-color: #f0f0f0; 
+    border-radius: 5px; 
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+    display: inline-block;
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+.autorovoPitanje{
+    background-color: #fc701f20;
+    border: 1px solid #f78432;
+}
+/***********************FORMA*NOVO*PITANJE***************************/
+.container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.form h2 {
+    margin-bottom: 20px;
+}
+
+label {
+    display: inline-block;
+}
+
+input[type="radio"], input[type="checkbox"], input[type="submit"] {
+    margin: 0.5rem;
+}
+
+input[type="submit"]{
+    background-color: black;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    padding: 1rem 2rem; 
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+form button{
+    background-color: rgb(221, 221, 221);
+    font-size: 1rem;
+    color: black;
+    margin:  1rem 1rem 1rem 0;
+    border: none;
+    padding: 0.5rem 2rem; 
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#pitanje-input{
+    width: 99%;
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+#addButton{
+    margin-left: 1rem;
+}
+
+input:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+
+input[type="submit"]:hover {
+    background-color: #484848; 
+    transform: scale(1.05);
+}
+
+form button:hover{
+    background-color: black;
+    color: white; 
+    transform: scale(1.05);
+}
+
+input[type="submit"]:focus {
+    outline: none; 
+}
+
+.dodaj-izbor{
+    display: inline-block;
+    width: 40%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.jedna-opcija {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.jedna-opcija button{
+    margin: 0 0 0 1rem;
+    padding: 0.5rem;
+}
+
+input[type="radio"] {
+    margin-right: 0.5rem;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#greskaNovoPitanje{
+    display: none;
+    width: 50%;
+    background-color: red;
+    color: white;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+#greskaNovoPitanje p{
+    width: 100%;
+    text-align: center;
+}
+/****************************PRIJAVA/REGISTRACIJA**********************************/
+.container-login,
+.container-registration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-form,
+#registration-form {
+    background-color: #ffffff;
+    padding: 3.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 25%;
+}
+
+.login-form h1 {
+    color: #000000;
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-container input {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form p {
+    margin-top: 2rem;
+}
+
+p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+#greska {
+    display: none;
+    color: #cc0000; 
+}
+
+/************************ODJAVA****************************/
+
+#odjava{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.odjava-kartica {
+    width: 50%;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 3rem;
+}
+
+.odjava-kartica h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.odjava-kartica a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.odjava-kartica a:hover {
+    color: #fc701f;
+}
+
+/******************(NE)USPJEPNA*AKTIVACIJA******************/
+.activation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.aktivacija-unutra{
+    background-color: #ffffff;
+    padding: 3.5rem;
+    border-radius: 8px;
+    text-align: left;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    width: 35%;
+}
+
+.aktivacija-unutra a{
+    text-decoration: none;
+    color: #f78432;
+}
+.aktivacija-unutra a:hover{
+    color: blue;
+}
+#textWrap{
+    overflow-wrap: break-word;
+}
+
+/**********************************STRANICENJE*************************************/
+
+#stranicenje {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 5rem;
+}
+
+#stranicenje button {
+    padding: 10px 20px;
+    background-color: #f78432;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#stranicenje button:hover {
+    background-color: #fc701f;
+}
+
+#trenutnaStranica {
+    margin: 0 20px;
+    font-weight: bold;
+}

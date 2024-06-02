@@ -48,3 +48,13 @@ CREATE TABLE "Dnevnik"(
   "vrijeme" DATETIME
 );
 COMMIT;
+
+ALTER TABLE Korisnik
+ADD COLUMN authToken TEXT;
+
+ALTER TABLE Korisnik
+ADD COLUMN tajniKljuc TEXT;
+
+ALTER TABLE Korisnik
+ADD COLUMN identifikator TEXT;
+
